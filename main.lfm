@@ -1,0 +1,40 @@
+object Form1: TForm1
+  Left = 349
+  Height = 715
+  Top = 32
+  Width = 1157
+  Caption = 'Symmetrie. Regelmatige structuren in de kunst.'
+  ClientHeight = 715
+  ClientWidth = 1157
+  DesignTimePPI = 120
+  Menu = MainMenu1
+  Position = poDesktopCenter
+  object pbMain: TPaintBox
+    Left = 0
+    Height = 715
+    Top = 0
+    Width = 1157
+    Align = alClient
+    Color = clMoneyGreen
+    ParentColor = False
+  end
+  object MainMenu1: TMainMenu
+    Left = 69
+    Top = 81
+    object mniHoofdstuk2: TMenuItem
+      Caption = 'Hoofdstuk 2'
+      object mniBloem: TMenuItem
+        Caption = 'Bloem met rotatiesymmetrie C(m)'
+        OnClick = mniBloemClick
+      end
+      object mniWervel: TMenuItem
+        Caption = 'Draaiende en krimpende regelmatige veelhoek'
+        OnClick = mniWervelClick
+      end
+      object mniCycloide: TMenuItem
+        Caption = 'Cycloide, symmetrietype D(m)'
+        OnClick = mniCycloideClick
+      end
+    end
+  end
+end
