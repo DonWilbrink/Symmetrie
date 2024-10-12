@@ -5,22 +5,33 @@ unit main;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Menus, ExtCtrls;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Menus, ExtCtrls,
+  StdCtrls, Spin;
 
 type
 
   { TForm1 }
 
   TForm1 = class(TForm)
+    lblParameter2: TLabel;
+    lblParameter: TLabel;
     MainMenu1: TMainMenu;
+    mniRand: TMenuItem;
+    mniHoofdstuk3: TMenuItem;
     mniCycloide: TMenuItem;
     mniWervel: TMenuItem;
     mniHoofdstuk2: TMenuItem;
     mniBloem: TMenuItem;
+    Panel1: TPanel;
     pbMain: TPaintBox;
+    seParameter: TSpinEdit;
+    seParameter2: TSpinEdit;
     procedure mniCycloideClick(Sender: TObject);
     procedure mniBloemClick(Sender: TObject);
+    procedure mniRandClick(Sender: TObject);
     procedure mniWervelClick(Sender: TObject);
+    procedure seParameter2Change(Sender: TObject);
+    procedure seParameterChange(Sender: TObject);
   private
 
   public
@@ -64,6 +75,136 @@ begin
     y := r*Sin(t);
     if k = 0 then pbMain.Canvas.MoveTo(Trunc(xFac*x+xOff),Trunc(yFac*y+yOff)) else
       pbMain.Canvas.LineTo(Trunc(xFac*x+xOff),Trunc(yFac*y+yOff));
+  end;
+end;
+
+procedure TForm1.mniRandClick(Sender: TObject);
+var
+  c, c0, h, i, m, n, p, q, s, v, xOff, yOff: Integer;
+  xFac, yFac: Double;
+  x, y: Array of Integer;
+
+  procedure Gosub450;
+  var
+    k: Integer;
+  begin
+    pbMain.Canvas.MoveTo(Trunc((c0*i+10+p*x[1])*xFac+xOff),Trunc((q*y[1])*yFac+yOff));
+    for k := 2 to m do
+      pbMain.Canvas.LineTo(Trunc((c0*i+10+p*x[k])*xFac+xOff),Trunc(q*y[k]*yFac+yOff));
+  end;
+
+begin
+  pbMain.Canvas.Clear;
+  xOff := -100; //pbMain.Canvas.Width div 2;
+  yOff := pbMain.Canvas.Height div 2;
+  yFac := pbMain.Canvas.Height / 128;
+  xFac := pbMain.Canvas.Width / 240;
+  seParameter.MaxValue := 7;
+  seParameter.MinValue := 1;
+  lblParameter.Caption := 'Typekeuze';
+  seParameter2.MaxValue := 12;
+  seParameter2.MinValue := 5;
+  lblParameter2.Caption := 'Horizontale verplaatsing';
+  m := 11;
+  x := [0,0,0,8,8,4,4,6,6,2,2,6];
+  y := [0,-8,8,8,2,2,4,4,6,6,0,0];
+  c := seParameter2.Value;
+  h := 120;
+  v := 90;
+  p := 1;
+  q := 1;
+  n := Trunc((h-16)/c);
+  s := seParameter.Value;
+  case s of
+    1:
+    begin
+      c0 := c;
+      for i := 1 to 2*n do
+        Gosub450;
+    end;
+    2:
+    begin
+      c0 := c;
+      for i := 1 to 2*n do
+      begin
+        Gosub450;
+        q := -q;
+        Gosub450;
+      end;
+    end;
+    3:
+    begin
+      c0 := 2*c;
+      for i := 1 to n do
+      begin
+        Gosub450;
+        p := -p;
+        Gosub450;
+      end;
+    end;
+    4:
+    begin
+      c0 := 2*c;
+      for i := 1 to n do
+      begin
+        Gosub450;
+        p := -p;
+        q := -q;
+        Gosub450;
+      end;
+    end;
+    5:
+    begin
+      c0 := 2*c;
+      for i := 1 to n do
+      begin
+        Gosub450;
+        p := -p;
+        Gosub450;
+        q := -q;
+        Gosub450;
+        p := -p;
+        Gosub450;
+      end;
+    end;
+    6:
+    begin
+      c0 := c;
+      i := 1;
+      while i <= 2*n do
+      begin
+        Gosub450;
+        i := i+2;
+      end;
+      q := -q;
+      i := 2;
+      while i <= 2*n do
+      begin
+        Gosub450;
+        i := i+2;
+      end;
+    end;
+    7:
+    begin
+      c0 := 2*c;
+      i := 1;
+      while i <= n do
+      begin
+        Gosub450;
+        p := -p;
+        Gosub450;
+        i := i+2;
+      end;
+      q := -q;
+      i := 2;
+      while i <= n do
+      begin
+        Gosub450;
+        p := -p;
+        Gosub450;
+        i := i+2;
+      end;
+    end;
   end;
 end;
 
@@ -128,6 +269,16 @@ begin
       y[l] := (z*Sin(a)+y[l]*Cos(a))*c;
     end;
   end;
+end;
+
+procedure TForm1.seParameter2Change(Sender: TObject);
+begin
+  mniRandClick(Sender);
+end;
+
+procedure TForm1.seParameterChange(Sender: TObject);
+begin
+  mniRandClick(Sender);
 end;
 
 end.
