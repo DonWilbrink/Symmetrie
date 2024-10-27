@@ -13,9 +13,12 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
+    GroupBox1: TGroupBox;
     lblParameter2: TLabel;
     lblParameter: TLabel;
     MainMenu1: TMainMenu;
+    mniParal: TMenuItem;
+    mniHoofdstuk4: TMenuItem;
     mniRand: TMenuItem;
     mniHoofdstuk3: TMenuItem;
     mniCycloide: TMenuItem;
@@ -28,6 +31,7 @@ type
     seParameter2: TSpinEdit;
     procedure mniCycloideClick(Sender: TObject);
     procedure mniBloemClick(Sender: TObject);
+    procedure mniParalClick(Sender: TObject);
     procedure mniRandClick(Sender: TObject);
     procedure mniWervelClick(Sender: TObject);
     procedure seParameter2Change(Sender: TObject);
@@ -40,6 +44,7 @@ type
 
 var
   Form1: TForm1;
+  prog: Integer;
   EgaColor : array[0..15] of TColor =
     (TColor($000000),TColor($AA0000),TColor($00AA00),TColor($AAAA00),
      TColor($0000AA),TColor($AA00AA),TColor($0055AA),TColor($AAAAAA),
@@ -57,13 +62,16 @@ var
   a, c, k, m, n, xOff, yOff: Integer;
   b, r, t, x, y, xFac, yFac: Double;
 begin
+  GroupBox1.Visible := False;
   pbMain.Canvas.Clear;
+  prog := 1;
+  //Form1.Caption := 'Breedte paintbox ' + pbMain.Width.ToString;
   a := 1;
   b := 1.5;
   c := 1;
   m := 7;
   n := 400;
-  xOff := pbMain.Canvas.Width div 2;
+  xOff := pbMain.Canvas.Width div 2 - 120;
   yOff := pbMain.Canvas.Height div 2;
   yfac := -pbMain.Canvas.Height/6;
   xFac := -yFac;
@@ -78,9 +86,77 @@ begin
   end;
 end;
 
+procedure TForm1.mniParalClick(Sender: TObject);
+var
+  a, x1, y1, xFac, yFac: Double;
+  b, c, f, i, i1, i2, j, k, m, n, n1, n2, r, s, xOff, yOff: Integer;
+  x, y: Array of Integer;
+begin
+  prog := 5;
+  GroupBox1.Visible := True;
+  pbMain.Canvas.Clear;
+  seParameter.MaxValue := 2;
+  seParameter.MinValue := 1;
+  //seParameter.Value := 1;
+  lblParameter.Caption := 'Rangnummer';
+  seParameter2.MaxValue := 5;
+  seParameter2.MinValue := 1;
+  lblParameter2.Caption := 'Schaalfactor motief';
+  xFac := pbMain.Width/80;
+  yFac := pbMain.Height/60;
+  xOff := 0;
+  yOff := 0;
+  a := 3.16;
+  b := 5;
+  c := 8;
+  x := [0,0,3,3,0,0,0,0,0]; // dynamisch array begint bij 0
+  y := [0,0,0,1,0,0,0,0,0];
+  r := seParameter2.Value;
+  m := 4;
+  for i := 1 to m do
+  begin
+    x[i] := r*x[i];
+    y[i] := r*y[i];
+  end;
+  s := seParameter.Value;
+  case s of
+    1:
+    begin
+      f := 1;
+    end;
+    2:
+    begin
+      f := 2;
+      for n := 1 to m do
+      begin
+        x[m+n] := -x[n];
+        y[m+n] := -y[n];
+      end;
+    end;
+  end;
+  for n2 := 1 to Trunc(60/b)-1 do
+  begin
+    i1 := Trunc(-a*n2/c)+1;
+    i2 := Trunc((80-a*n2)/c)-1;
+    for n1 := i1 to i2 do
+    begin
+      x1 := c*n1+a*n2;
+      y1 := b*n2;
+      for j := 0 to f-1 do
+      begin
+        pbMain.Canvas.MoveTo(Trunc((x1+x[j*m+1])*xFac+xOff),Trunc((y1+y[j*m+1])*yFac+yOff));
+        for k := 2 to m do
+        begin
+          pbMain.Canvas.LineTo(Trunc((x1+x[j*m+k])*xFac+xOff),Trunc((y1+y[j*m+k])*yFac+yOff));
+        end;
+      end;
+    end;
+  end;
+end;
+
 procedure TForm1.mniRandClick(Sender: TObject);
 var
-  c, c0, h, i, m, n, p, q, s, v, xOff, yOff: Integer;
+  c, c0, h, i, m, n, p, q, s, {v,} xOff, yOff: Integer;
   xFac, yFac: Double;
   x, y: Array of Integer;
 
@@ -94,6 +170,8 @@ var
   end;
 
 begin
+  prog := 4;
+  GroupBox1.Visible := True;
   pbMain.Canvas.Clear;
   xOff := -100; //pbMain.Canvas.Width div 2;
   yOff := pbMain.Canvas.Height div 2;
@@ -110,7 +188,7 @@ begin
   y := [0,-8,8,8,2,2,4,4,6,6,0,0];
   c := seParameter2.Value;
   h := 120;
-  v := 90;
+  //v := 90;
   p := 1;
   q := 1;
   n := Trunc((h-16)/c);
@@ -213,6 +291,8 @@ var
   k, m, n, xOff, yOff: Integer;
   t, x1, x2, y1, y2, xFac, yFac: Double;
 begin
+  prog := 3;
+  GroupBox1.Visible := False;
   pbMain.Canvas.Clear;
   //pbMain.Canvas.TextOut(pbMain.Canvas.Width div 2, pbMain.Canvas.Height div 2, 'C');
   xOff := pbMain.Canvas.Width div 2;
@@ -239,6 +319,8 @@ var
   i, j, k, l, m, n, xOff, yOff: Integer;
   a, c, f, t, xFac, yFac, z: Double;
 begin
+  prog := 2;
+  GroupBox1.Visible := False;
   pbMain.Canvas.Clear;
   xOff := pbMain.Canvas.Width div 2;
   yOff := pbMain.Canvas.Height div 2;
@@ -273,12 +355,18 @@ end;
 
 procedure TForm1.seParameter2Change(Sender: TObject);
 begin
-  mniRandClick(Sender);
+  case prog of
+    4: mniRandClick(Sender);
+    5: mniParalClick(Sender);
+  end;
 end;
 
 procedure TForm1.seParameterChange(Sender: TObject);
 begin
-  mniRandClick(Sender);
+  case prog of
+    4: mniRandClick(Sender);
+    5: mniParalClick(Sender);
+  end;
 end;
 
 end.
