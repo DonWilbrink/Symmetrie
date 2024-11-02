@@ -432,6 +432,22 @@ var
   f, j, k, m, n, n1, n2, s, x0, x1, y1, xOff, yOff: Integer;
   xFac, yFac: Double;
   x, y: Array of Integer;
+
+  procedure ForLoop;
+  var
+    N: Integer;
+  begin
+    for N := 1 to M do
+          begin
+            X[M + N] := X[N];
+            Y[M + N] := -Y[N];
+            X[2 * M + N] := -X[N];
+            Y[2 * M + N] := Y[N];
+            X[3 * M + N] := -X[N];
+            Y[3 * M + N] := -Y[N];
+          end;
+  end;
+
 begin
   prog := 7;
   Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniRaam.Caption + ']';
@@ -467,15 +483,7 @@ begin
     begin
       // ***TYPE CMM***
       F := 4;
-      for N := 1 to M do
-      begin
-        X[M + N] := X[N];
-        Y[M + N] := -Y[N];
-        X[2 * M + N] := -X[N];
-        Y[2 * M + N] := Y[N];
-        X[3 * M + N] := -X[N];
-        Y[3 * M + N] := -Y[N];
-      end;
+      ForLoop;
     end;
   end;
   for N2 := 0 to 10 do
