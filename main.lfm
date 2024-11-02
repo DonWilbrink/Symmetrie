@@ -109,6 +109,14 @@ object Form1: TForm1
         Caption = 'Symmetrisch patroon op parallelogramrooster'
         OnClick = mniParalClick
       end
+      object mniRaam: TMenuItem
+        Caption = 'Symmetrisch patroon op rechthoekig rooster'
+        OnClick = mniRaamClick
+      end
+      object mniRuit: TMenuItem
+        Caption = 'Symmetrisch patroon op rhombisch rooster'
+        OnClick = mniRuitClick
+      end
     end
   end
 end

@@ -17,6 +17,8 @@ type
     lblParameter2: TLabel;
     lblParameter: TLabel;
     MainMenu1: TMainMenu;
+    mniRuit: TMenuItem;
+    mniRaam: TMenuItem;
     mniParal: TMenuItem;
     mniHoofdstuk4: TMenuItem;
     mniRand: TMenuItem;
@@ -29,6 +31,8 @@ type
     pbMain: TPaintBox;
     seParameter: TSpinEdit;
     seParameter2: TSpinEdit;
+    procedure mniRuitClick(Sender: TObject);
+    procedure mniRaamClick(Sender: TObject);
     procedure mniCycloideClick(Sender: TObject);
     procedure mniBloemClick(Sender: TObject);
     procedure mniParalClick(Sender: TObject);
@@ -65,7 +69,7 @@ begin
   GroupBox1.Visible := False;
   pbMain.Canvas.Clear;
   prog := 1;
-  //Form1.Caption := 'Breedte paintbox ' + pbMain.Width.ToString;
+  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniBloem.Caption + ']';
   a := 1;
   b := 1.5;
   c := 1;
@@ -93,6 +97,7 @@ var
   x, y: Array of Integer;
 begin
   prog := 5;
+  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniParal.Caption + ']';
   GroupBox1.Visible := True;
   pbMain.Canvas.Clear;
   seParameter.MaxValue := 2;
@@ -171,6 +176,7 @@ var
 
 begin
   prog := 4;
+  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniRand.Caption + ']';
   GroupBox1.Visible := True;
   pbMain.Canvas.Clear;
   xOff := -100; //pbMain.Canvas.Width div 2;
@@ -292,6 +298,7 @@ var
   t, x1, x2, y1, y2, xFac, yFac: Double;
 begin
   prog := 3;
+  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniCycloide.Caption + ']';
   GroupBox1.Visible := False;
   pbMain.Canvas.Clear;
   //pbMain.Canvas.TextOut(pbMain.Canvas.Width div 2, pbMain.Canvas.Height div 2, 'C');
@@ -313,6 +320,183 @@ begin
   end;
 end;
 
+procedure TForm1.mniRaamClick(Sender: TObject);
+var
+  f, j, k, m, n, n1, n2, s, x1, y1, xOff, yOff: Integer;
+  xFac, yFac: Double;
+  x, y: Array of Integer;
+begin
+  prog := 6;
+  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniRaam.Caption + ']';
+  GroupBox1.Visible := True;
+  pbMain.Canvas.Clear;
+  seParameter.MaxValue := 5;
+  seParameter.MinValue := 1;
+  //seParameter.Value := 1;
+  lblParameter.Caption := 'Rangnummer';
+  seParameter2.MaxValue := 5;
+  seParameter2.MinValue := 1;
+  lblParameter2.Caption := 'Niet gebruikt';
+  xFac := pbMain.Width/80;
+  yFac := pbMain.Height/60;
+  xOff := 0;
+  yOff := 0;
+  m := 4;
+  x := [0,4,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0]; // dynamisch array begint bij 0
+  y := [0,0,1,2,3,0,0,0,0,0,0,0,0,0,0,0,0];
+  s := seParameter.Value;
+  case s of
+    1:
+    begin
+      // ***TYPE PM***
+      F := 2;
+      for N := 1 to M do
+      begin
+        X[M + N] := X[N];
+        Y[M + N] := -Y[N];
+      end;
+    end;
+    2:
+    begin
+      // ***TYPE PG***
+      F := 2;
+      for N := 1 to M do
+      begin
+        X[M + N] := 4+X[N];
+        Y[M + N] := -Y[N];
+      end;
+    end;
+    3:
+    begin
+      // ***TYPE PMM***
+      F := 4;
+      for N := 1 to M do
+      begin
+        X[M + N] := X[N];
+        Y[M + N] := -Y[N];
+        X[2 * M + N] := 8-X[N];
+        Y[2 * M + N] := Y[N];
+        X[3 * M + N] := 8-X[N];
+        Y[3 * M + N] := -Y[N];
+      end;
+    end;
+    4:
+    begin
+      // ***TYPE PMG***
+      F := 4;
+      for N := 1 to M do
+      begin
+        X[M + N] := 8-X[N];
+        Y[M + N] := -Y[N];
+        X[2 * M + N] := X[N];
+        Y[2 * M + N] := 3 - Y[N];
+        X[3 * M + N] := 8-X[N];
+        Y[3 * M + N] := 3 + Y[N];
+      end;
+    end;
+    5:
+    begin
+      // ***TYPE PGG***
+      F := 4;
+      for N := 1 to M do
+      begin
+        X[M + N] := 8-X[N];
+        Y[M + N] := -Y[N];
+        X[2 * M + N] := 4+X[N];
+        Y[2 * M + N] := 3-Y[N];
+        X[3 * M + N] := 4-X[N];
+        Y[3 * M + N] := 3+Y[N];
+      end;
+    end;
+  end;
+  for N2 := 0 to 6 do
+  begin
+    for N1 := 0 to 7 do
+    begin
+      X1 := 8+8*N1;
+      Y1 := 12+6*N2;
+      for J := 0 to F - 1 do
+      begin
+        pbMain.Canvas.MoveTo(Trunc(xFac*(X1+X[J*M+1])+xOff), Trunc(yFac*(Y1+Y[J*M+1])+yOff));
+        for K := 2 to M do
+        begin
+          pbMain.Canvas.LineTo(Trunc(xFac*(X1+X[J*M+K])+xOff), Trunc(yFac*(Y1+Y[J*M+K])+yOff));
+        end;
+      end;
+    end;
+  end;
+end;
+
+procedure TForm1.mniRuitClick(Sender: TObject);
+var
+  f, j, k, m, n, n1, n2, s, x0, x1, y1, xOff, yOff: Integer;
+  xFac, yFac: Double;
+  x, y: Array of Integer;
+begin
+  prog := 7;
+  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniRaam.Caption + ']';
+  GroupBox1.Visible := True;
+  pbMain.Canvas.Clear;
+  seParameter.MaxValue := 2;
+  seParameter.MinValue := 1;
+  //seParameter.Value := 1;
+  lblParameter.Caption := 'Rangnummer';
+  seParameter2.MaxValue := 5;
+  seParameter2.MinValue := 1;
+  lblParameter2.Caption := 'Niet gebruikt';
+  xFac := pbMain.Width/80;
+  yFac := pbMain.Height/60;
+  xOff := 0;
+  yOff := 0;
+  m := 4;
+  x := [0,4,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0]; // dynamisch array begint bij 0
+  y := [0,0,1,2,3,0,0,0,0,0,0,0,0,0,0,0,0];
+  s := seParameter.Value;
+  case s of
+    1:
+    begin
+      // ***TYPE CM***
+      F := 2;
+      for N := 1 to M do
+      begin
+        X[M + N] := X[N];
+        Y[M + N] := -Y[N];
+      end;
+    end;
+    2:
+    begin
+      // ***TYPE CMM***
+      F := 4;
+      for N := 1 to M do
+      begin
+        X[M + N] := X[N];
+        Y[M + N] := -Y[N];
+        X[2 * M + N] := -X[N];
+        Y[2 * M + N] := Y[N];
+        X[3 * M + N] := -X[N];
+        Y[3 * M + N] := -Y[N];
+      end;
+    end;
+  end;
+  for N2 := 0 to 10 do
+  begin
+    for N1 := 0 to 6 do
+    begin
+      if N2 Mod 2 = 0 then X0 := 7 else X0 := 12;
+      X1 := X0 + 10 * N1;
+      Y1 := 10 + 4 * N2;
+      for J := 0 TO F - 1 do
+      begin
+        pbMain.Canvas.MoveTo(Trunc(xFac*(X1+X[J*M+1])+xOff), Trunc(yFac*(Y1+Y[J*M+1])+yOff));
+        for K := 2 to M do
+        begin
+          pbMain.Canvas.LineTo(Trunc(xFac*(X1+X[J*M+K])+xOff), Trunc(yFac*(Y1+Y[J*M+K])+yOff));
+        end;
+      end;
+    end;
+  end;
+end;
+
 procedure TForm1.mniWervelClick(Sender: TObject);
 var
   x, y: Array[0..7] of Double;
@@ -320,6 +504,7 @@ var
   a, c, f, t, xFac, yFac, z: Double;
 begin
   prog := 2;
+  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniWervel.Caption + ']';
   GroupBox1.Visible := False;
   pbMain.Canvas.Clear;
   xOff := pbMain.Canvas.Width div 2;
@@ -358,6 +543,8 @@ begin
   case prog of
     4: mniRandClick(Sender);
     5: mniParalClick(Sender);
+    6: mniRaamClick(Sender);
+    7: mniRuitClick(Sender);
   end;
 end;
 
@@ -366,6 +553,8 @@ begin
   case prog of
     4: mniRandClick(Sender);
     5: mniParalClick(Sender);
+    6: mniRaamClick(Sender);
+    7: mniRuitClick(Sender);
   end;
 end;
 
