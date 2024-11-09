@@ -17,6 +17,7 @@ type
     lblParameter2: TLabel;
     lblParameter: TLabel;
     MainMenu1: TMainMenu;
+    mniQuadr: TMenuItem;
     mniRuit: TMenuItem;
     mniRaam: TMenuItem;
     mniParal: TMenuItem;
@@ -31,6 +32,7 @@ type
     pbMain: TPaintBox;
     seParameter: TSpinEdit;
     seParameter2: TSpinEdit;
+    procedure mniQuadrClick(Sender: TObject);
     procedure mniRuitClick(Sender: TObject);
     procedure mniRaamClick(Sender: TObject);
     procedure mniCycloideClick(Sender: TObject);
@@ -505,6 +507,101 @@ begin
   end;
 end;
 
+procedure TForm1.mniQuadrClick(Sender: TObject);
+var
+  f, i, j, k, m, n, n1, n2, s, x1, y1, xOff, yOff: Integer;
+  p1, xFac, yFac: Double;
+  x, y: Array of Integer;
+begin
+  prog := 8;
+  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniQuadr.Caption + ']';
+  GroupBox1.Visible := True;
+  pbMain.Canvas.Clear;
+  seParameter.MaxValue := 3;
+  seParameter.MinValue := 1;
+  //seParameter.Value := 1;   ummer';
+  seParameter2.MaxValue := 5;
+  seParameter2.MinValue := 1;
+  lblParameter2.Caption := 'Niet gebruikt';
+  xFac := pbMain.Width/80;
+  yFac := pbMain.Height/60;
+  xOff := 0;
+  yOff := 0;
+  m := 4;
+  x := [0,0,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; // dynamisch array begint bij 0
+  y := [0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  p1 := pi/2;
+  s := seParameter.Value;
+  case s of
+    1:   //Type P4
+    begin
+      f := 4;
+      for i := 1 to 3 do
+      begin
+        for n := 1 to m do
+        begin
+          x[i*m+n] := Round(x[n]*Cos(p1*i)-y[n]*Sin(p1*i));
+          y[i*m+n] := Round(x[n]*Sin(p1*i)+y[n]*Cos(p1*i));
+        end;
+      end;
+    end; //end case 1
+    2:   //Type P4N
+    begin
+      f := 8;
+      for i := 1 to 3 do
+      begin
+        for n := 1 to m do
+        begin
+          x[i*m+n] := Round(x[n]*Cos(p1*i)-y[n]*Sin(p1*i));
+          y[i*m+n] := Round(x[n]*Sin(p1*i)+y[n]*Cos(p1*i));
+        end;
+      end;
+      for i := 0 to 3 do
+      begin
+        for n := 1 to m do
+        begin
+          x[(4+i)*m+n] := y[i*m+n];
+          y[(4+i)*m+n] := x[i*m+n];
+        end;
+      end;
+    end; //end case 2
+    3:    //Type P4G
+    begin
+      f := 8;
+      for i := 1 to 3 do
+      begin
+        for n := 1 to m do
+        begin
+          x[i*m+n] := Round(x[n]*Cos(p1*i)-y[n]*Sin(p1*i));
+          y[i*m+n] := Round(x[n]*Sin(p1*i)+y[n]*Cos(p1*i));
+        end;
+      end;
+      for i := 0 to 3 do
+      begin
+        for n := 1 to m do
+        begin
+          x[(4+i)*m+n] := 4-y[i*m+n];
+          y[(4+i)*m+n] := 4-x[i*m+n];
+        end;
+      end;
+    end; //end case 3
+  end; //end case
+  for n2 := 0 to 5 do
+  begin
+    for n1 := 0 to 7 do
+    begin
+      for j := 0 to f-1 do
+      begin
+        x1 := 10+8*n1;
+        y1 := 10+8*n2;
+        pbMain.Canvas.MoveTo(Trunc(xFac*(x1+x[j*m+1])+xOff),Trunc(yFac*(y1+y[j*m+1])+yOff));
+        for k := 2 to m do
+          pbMain.Canvas.LineTo(Trunc(xFac*(x1+x[j*m+k])+xOff),Trunc(yFac*(y1+y[j*m+k])+yOff));
+      end;
+    end;
+  end;
+end;
+
 procedure TForm1.mniWervelClick(Sender: TObject);
 var
   x, y: Array[0..7] of Double;
@@ -553,6 +650,7 @@ begin
     5: mniParalClick(Sender);
     6: mniRaamClick(Sender);
     7: mniRuitClick(Sender);
+    8: mniQuadrClick(Sender);
   end;
 end;
 
@@ -563,6 +661,7 @@ begin
     5: mniParalClick(Sender);
     6: mniRaamClick(Sender);
     7: mniRuitClick(Sender);
+    8: mniQuadrClick(Sender);
   end;
 end;
 
