@@ -17,6 +17,7 @@ type
     lblParameter2: TLabel;
     lblParameter: TLabel;
     MainMenu1: TMainMenu;
+    mniTri: TMenuItem;
     mniQuadr: TMenuItem;
     mniRuit: TMenuItem;
     mniRaam: TMenuItem;
@@ -39,6 +40,7 @@ type
     procedure mniBloemClick(Sender: TObject);
     procedure mniParalClick(Sender: TObject);
     procedure mniRandClick(Sender: TObject);
+    procedure mniTriClick(Sender: TObject);
     procedure mniWervelClick(Sender: TObject);
     procedure seParameter2Change(Sender: TObject);
     procedure seParameterChange(Sender: TObject);
@@ -289,6 +291,104 @@ begin
         p := -p;
         Gosub450;
         i := i+2;
+      end;
+    end;
+  end;
+end;
+
+procedure TForm1.mniTriClick(Sender: TObject);
+var
+  b, f, i, j, k, m, n, n1, n2, s, xOff, yOff: Integer;
+  p1, p2, x1, y1, xFac, yFac: Double;
+  x, y: Array of Integer;
+begin
+  prog := 9;
+  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniTri.Caption + ']';
+  GroupBox1.Visible := True;
+  pbMain.Canvas.Clear;
+  seParameter.MaxValue := 3;
+  seParameter.MinValue := 1;
+  //seParameter.Value := 1;
+  lblParameter.Caption := 'Rangnummer';
+  seParameter2.MaxValue := 5;
+  seParameter2.MinValue := 1;
+  lblParameter2.Caption := 'Niet gebruikt';
+  xFac := pbMain.Width/80;
+  yFac := pbMain.Height/60;
+  xOff := 0;
+  yOff := 0;
+  m := 3;
+  p1 := 2*pi/3;
+  p2 := Sqrt(3);
+  x := [0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; // dynamisch array begint bij 0
+  y := [0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  s := seParameter.Value;
+  case s of
+    1:   // Type P3
+    begin
+      f := 3;
+      for i := 1 to 2 do
+      begin
+        for n := 1 to m do
+        begin
+          x[i*m+n] := Round(x[n]*Cos(p1*i)-y[n]*Sin(p1*i));
+          y[i*m+n] := Round(x[n]*Sin(p1*i)+y[n]*Cos(p1*i));
+        end;
+      end;
+    end;
+    2:  // Type P31M
+    begin
+      f := 6;
+      for i := 1 to 2 do
+      begin
+        for n := 1 to m do
+        begin
+          x[i*m+n] := Round(x[n]*Cos(p1*i)-y[n]*Sin(p1*i));
+          y[i*m+n] := Round(x[n]*Sin(p1*i)+y[n]*Cos(p1*i));
+        end;
+      end;
+      for i := 0 to 2 do
+      begin
+        for n := 1 to m do
+        begin
+          x[(3+i)*m+n] := Round(-(x[i*m+n]+p2*y[i*m+n])/2+4);
+          y[(3+i)*m+n] := Round(-(p2*x[i*m+n]-y[i*m+n])/2+4/p2);
+        end;
+      end;
+    end;
+    3:   // Type P3M1
+    begin
+      f := 6;
+      for i := 1 to 2 do
+      begin
+        for n := 1 to m do
+        begin
+          x[i*m+n] := Round(x[n]*Cos(p1*i)-y[n]*Sin(p1*i));
+          y[i*m+n] := Round(x[n]*Sin(p1*i)+y[n]*Cos(p1*i));
+        end;
+      end;
+      for i := 0 to 2 do
+      begin
+        for n := 1 to m do
+        begin
+          x[(3+i)*m+n] := -x[i*m+n];
+          y[(3+i)*m+n] := y[i*m+n];
+        end;
+      end;
+    end;
+  end;
+  for n2 := 0 to 6 do
+  begin
+    if n2 mod 2 = 0 then b := 0 else b := 1;
+    for n1 := 0 to 7-b do
+    begin
+      for j := 0 to f-1 do
+      begin
+        x1 := 12+4*b+8*n1;
+        y1 := 8+6.93*n2;
+        pbMain.Canvas.MoveTo(Round(xOff+xFac*(x1+x[j*m+1])),Round(yOff+yFac*(y1+y[j*m+1])));
+        for k := 2 to m do
+          pbMain.Canvas.LineTo(Round(xOff+xFac*(x1+x[j*m+k])),Round(yOff+yFac*(y1+y[j*m+k])));
       end;
     end;
   end;
@@ -651,6 +751,7 @@ begin
     6: mniRaamClick(Sender);
     7: mniRuitClick(Sender);
     8: mniQuadrClick(Sender);
+    9: mniTriClick(Sender);
   end;
 end;
 
@@ -662,6 +763,7 @@ begin
     6: mniRaamClick(Sender);
     7: mniRuitClick(Sender);
     8: mniQuadrClick(Sender);
+    9: mniTriClick(Sender);
   end;
 end;
 

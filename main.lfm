@@ -121,6 +121,10 @@ object Form1: TForm1
         Caption = 'Symmetrisch patroon op quadratisch rooster'
         OnClick = mniQuadrClick
       end
+      object mniTri: TMenuItem
+        Caption = 'Variabel patroon op hexagonaal rooster'
+        OnClick = mniTriClick
+      end
     end
   end
 end
