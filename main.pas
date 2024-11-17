@@ -300,7 +300,7 @@ procedure TForm1.mniTriClick(Sender: TObject);
 var
   b, f, i, j, k, m, n, n1, n2, s, xOff, yOff: Integer;
   p1, p2, x1, y1, xFac, yFac: Double;
-  x, y: Array of Integer;
+  x, y: Array of Double;
 begin
   prog := 9;
   Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniTri.Caption + ']';
@@ -331,8 +331,8 @@ begin
       begin
         for n := 1 to m do
         begin
-          x[i*m+n] := Round(x[n]*Cos(p1*i)-y[n]*Sin(p1*i));
-          y[i*m+n] := Round(x[n]*Sin(p1*i)+y[n]*Cos(p1*i));
+          x[i*m+n] := x[n]*Cos(p1*i)-y[n]*Sin(p1*i);
+          y[i*m+n] := x[n]*Sin(p1*i)+y[n]*Cos(p1*i);
         end;
       end;
     end;
@@ -343,16 +343,16 @@ begin
       begin
         for n := 1 to m do
         begin
-          x[i*m+n] := Round(x[n]*Cos(p1*i)-y[n]*Sin(p1*i));
-          y[i*m+n] := Round(x[n]*Sin(p1*i)+y[n]*Cos(p1*i));
+          x[i*m+n] := x[n]*Cos(p1*i)-y[n]*Sin(p1*i);
+          y[i*m+n] := x[n]*Sin(p1*i)+y[n]*Cos(p1*i);
         end;
       end;
       for i := 0 to 2 do
       begin
         for n := 1 to m do
         begin
-          x[(3+i)*m+n] := Round(-(x[i*m+n]+p2*y[i*m+n])/2+4);
-          y[(3+i)*m+n] := Round(-(p2*x[i*m+n]-y[i*m+n])/2+4/p2);
+          x[(3+i)*m+n] := -(x[i*m+n]+p2*y[i*m+n])/2+4;
+          y[(3+i)*m+n] := -(p2*x[i*m+n]-y[i*m+n])/2+4/p2;
         end;
       end;
     end;
@@ -363,8 +363,8 @@ begin
       begin
         for n := 1 to m do
         begin
-          x[i*m+n] := Round(x[n]*Cos(p1*i)-y[n]*Sin(p1*i));
-          y[i*m+n] := Round(x[n]*Sin(p1*i)+y[n]*Cos(p1*i));
+          x[i*m+n] := x[n]*Cos(p1*i)-y[n]*Sin(p1*i);
+          y[i*m+n] := x[n]*Sin(p1*i)+y[n]*Cos(p1*i);
         end;
       end;
       for i := 0 to 2 do
@@ -611,7 +611,7 @@ procedure TForm1.mniQuadrClick(Sender: TObject);
 var
   f, i, j, k, m, n, n1, n2, s, x1, y1, xOff, yOff: Integer;
   p1, xFac, yFac: Double;
-  x, y: Array of Integer;
+  x, y: Array of Double;
 begin
   prog := 8;
   Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniQuadr.Caption + ']';
@@ -640,8 +640,8 @@ begin
       begin
         for n := 1 to m do
         begin
-          x[i*m+n] := Round(x[n]*Cos(p1*i)-y[n]*Sin(p1*i));
-          y[i*m+n] := Round(x[n]*Sin(p1*i)+y[n]*Cos(p1*i));
+          x[i*m+n] := x[n]*Cos(p1*i)-y[n]*Sin(p1*i);
+          y[i*m+n] := x[n]*Sin(p1*i)+y[n]*Cos(p1*i);
         end;
       end;
     end; //end case 1
@@ -652,8 +652,8 @@ begin
       begin
         for n := 1 to m do
         begin
-          x[i*m+n] := Round(x[n]*Cos(p1*i)-y[n]*Sin(p1*i));
-          y[i*m+n] := Round(x[n]*Sin(p1*i)+y[n]*Cos(p1*i));
+          x[i*m+n] := x[n]*Cos(p1*i)-y[n]*Sin(p1*i);
+          y[i*m+n] := x[n]*Sin(p1*i)+y[n]*Cos(p1*i);
         end;
       end;
       for i := 0 to 3 do
@@ -672,8 +672,8 @@ begin
       begin
         for n := 1 to m do
         begin
-          x[i*m+n] := Round(x[n]*Cos(p1*i)-y[n]*Sin(p1*i));
-          y[i*m+n] := Round(x[n]*Sin(p1*i)+y[n]*Cos(p1*i));
+          x[i*m+n] := x[n]*Cos(p1*i)-y[n]*Sin(p1*i);
+          y[i*m+n] := x[n]*Sin(p1*i)+y[n]*Cos(p1*i);
         end;
       end;
       for i := 0 to 3 do
