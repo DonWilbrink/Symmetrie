@@ -17,6 +17,7 @@ type
     lblParameter2: TLabel;
     lblParameter: TLabel;
     MainMenu1: TMainMenu;
+    mniHexa: TMenuItem;
     mniTri: TMenuItem;
     mniQuadr: TMenuItem;
     mniRuit: TMenuItem;
@@ -33,6 +34,7 @@ type
     pbMain: TPaintBox;
     seParameter: TSpinEdit;
     seParameter2: TSpinEdit;
+    procedure mniHexaClick(Sender: TObject);
     procedure mniQuadrClick(Sender: TObject);
     procedure mniRuitClick(Sender: TObject);
     procedure mniRaamClick(Sender: TObject);
@@ -702,6 +704,82 @@ begin
   end;
 end;
 
+procedure TForm1.mniHexaClick(Sender: TObject);
+var
+  b, f, i, j, k, m, n, n1, n2, s, xOff, yOff: Integer;
+  p1, x1, y1, xFac, yFac: Double;
+  x, y: Array of Double;
+begin
+  prog := 10;
+  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniHexa.Caption + ']';
+  GroupBox1.Visible := True;
+  pbMain.Canvas.Clear;
+  seParameter.MaxValue := 2;
+  seParameter.MinValue := 1;
+  lblParameter.Caption := 'Rangnummer';
+  seParameter2.MaxValue := 5;
+  seParameter2.MinValue := 1;
+  lblParameter2.Caption := 'Niet gebruikt';
+  xFac := pbMain.Width/80;
+  yFac := pbMain.Height/60;
+  xOff := 0;
+  yOff := 0;
+  p1 := pi/3;
+  m := 3;
+  x := [0,0,3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; // dynamisch array begint bij 0
+  y := [0,0,1.732,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  s := seParameter.Value;
+  case s of
+    1:    // type P6
+    begin
+      f := 6;
+      for i := 1 to 5 do
+      begin
+        for n := 1 to m do
+        begin
+          x[i*m+n] := x[n]*Cos(p1*i)-y[n]*Sin(p1*i);
+          y[i*m+n] := x[n]*Sin(p1*i)+y[n]*Cos(p1*i);
+        end;
+      end;
+    end;
+    2:   // type P6M
+    begin
+      f := 12;
+      for i := 1 to 5 do
+      begin
+        for n := 1 to m do
+        begin
+          x[i*m+n] := x[n]*Cos(p1*i)-y[n]*Sin(p1*i);
+          y[i*m+n] := x[n]*Sin(p1*i)+y[n]*Cos(p1*i);
+        end;
+      end;
+      for i := 0 to 5 do
+      begin
+        for n := 1 to m do
+        begin
+          x[(6+i)*m+n] := x[i*m+n];
+          y[(6+i)*m+n] := -y[i*m+n];
+        end;
+      end;
+    end;
+  end;
+  for n2 := 0 to 6 do
+  begin
+    if n2 mod 2 = 0 then b := 0 else b := 1;
+    for n1 := 0 to 7-b do
+    begin
+      for j := 0 to f-1 do
+      begin
+        x1 := 12+4*b+8*n1;
+        y1 := 8+6.93*n2;
+        pbMain.Canvas.MoveTo(Round(xFac*(x1+x[j*m+1])+xOff),Round(yFac*(y1+y[j*m+1])+yOff));
+        for k := 2 to m do
+          pbMain.Canvas.LineTo(Round(xFac*(x1+x[j*m+k])+xOff),Round(yFac*(y1+y[j*m+k])+yOff));
+      end;
+    end;
+  end;
+end;
+
 procedure TForm1.mniWervelClick(Sender: TObject);
 var
   x, y: Array[0..7] of Double;
@@ -752,6 +830,7 @@ begin
     7: mniRuitClick(Sender);
     8: mniQuadrClick(Sender);
     9: mniTriClick(Sender);
+    10: mniHexaClick(Sender);
   end;
 end;
 
@@ -764,6 +843,7 @@ begin
     7: mniRuitClick(Sender);
     8: mniQuadrClick(Sender);
     9: mniTriClick(Sender);
+    10: mniHexaClick(Sender);
   end;
 end;
 

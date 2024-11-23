@@ -9,7 +9,6 @@ object Form1: TForm1
   DesignTimePPI = 120
   Menu = MainMenu1
   Position = poDesktopCenter
-  LCLVersion = '4.0.0.1'
   object pbMain: TPaintBox
     Left = 0
     Height = 715
@@ -125,6 +124,10 @@ object Form1: TForm1
       object mniTri: TMenuItem
         Caption = 'Variabel patroon op hexagonaal rooster'
         OnClick = mniTriClick
+      end
+      object mniHexa: TMenuItem
+        Caption = 'Symmetrisch patroon op hexagonaal rooster'
+        OnClick = mniHexaClick
       end
     end
   end
