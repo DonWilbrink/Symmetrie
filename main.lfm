@@ -1,4 +1,4 @@
-object Form1: TForm1
+object frmMain: TfrmMain
   Left = 349
   Height = 715
   Top = 32
@@ -128,6 +128,13 @@ object Form1: TForm1
       object mniHexa: TMenuItem
         Caption = 'Symmetrisch patroon op hexagonaal rooster'
         OnClick = mniHexaClick
+      end
+    end
+    object mniHoofdstuk7: TMenuItem
+      Caption = 'Hoofdstuk 7'
+      object mniKleed: TMenuItem
+        Caption = 'Borduurkleed bepaald door een wiskundige functie'
+        OnClick = mniKleedClick
       end
     end
   end

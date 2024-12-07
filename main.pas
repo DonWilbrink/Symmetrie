@@ -10,13 +10,15 @@ uses
 
 type
 
-  { TForm1 }
+  { TfrmMain }
 
-  TForm1 = class(TForm)
+  TfrmMain = class(TForm)
     GroupBox1: TGroupBox;
     lblParameter2: TLabel;
     lblParameter: TLabel;
     MainMenu1: TMainMenu;
+    mniKleed: TMenuItem;
+    mniHoofdstuk7: TMenuItem;
     mniHexa: TMenuItem;
     mniTri: TMenuItem;
     mniQuadr: TMenuItem;
@@ -35,6 +37,7 @@ type
     seParameter: TSpinEdit;
     seParameter2: TSpinEdit;
     procedure mniHexaClick(Sender: TObject);
+    procedure mniKleedClick(Sender: TObject);
     procedure mniQuadrClick(Sender: TObject);
     procedure mniRuitClick(Sender: TObject);
     procedure mniRaamClick(Sender: TObject);
@@ -53,7 +56,7 @@ type
   end;
 
 var
-  Form1: TForm1;
+  frmMain: TfrmMain;
   prog: Integer;
   EgaColor : array[0..15] of TColor =
     (TColor($000000),TColor($AA0000),TColor($00AA00),TColor($AAAA00),
@@ -65,9 +68,9 @@ implementation
 
 {$R *.lfm}
 
-{ TForm1 }
+{ TfrmMain }
 
-procedure TForm1.mniBloemClick(Sender: TObject);
+procedure TfrmMain.mniBloemClick(Sender: TObject);
 var
   a, c, k, m, n, xOff, yOff: Integer;
   b, r, t, x, y, xFac, yFac: Double;
@@ -75,7 +78,7 @@ begin
   GroupBox1.Visible := False;
   pbMain.Canvas.Clear;
   prog := 1;
-  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniBloem.Caption + ']';
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniBloem.Caption + ']';
   a := 1;
   b := 1.5;
   c := 1;
@@ -96,14 +99,14 @@ begin
   end;
 end;
 
-procedure TForm1.mniParalClick(Sender: TObject);
+procedure TfrmMain.mniParalClick(Sender: TObject);
 var
   a, x1, y1, xFac, yFac: Double;
   b, c, f, i, i1, i2, j, k, m, n, n1, n2, r, s, xOff, yOff: Integer;
   x, y: Array of Integer;
 begin
   prog := 5;
-  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniParal.Caption + ']';
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniParal.Caption + ']';
   GroupBox1.Visible := True;
   pbMain.Canvas.Clear;
   seParameter.MaxValue := 2;
@@ -165,7 +168,7 @@ begin
   end;
 end;
 
-procedure TForm1.mniRandClick(Sender: TObject);
+procedure TfrmMain.mniRandClick(Sender: TObject);
 var
   c, c0, h, i, m, n, p, q, s, {v,} xOff, yOff: Integer;
   xFac, yFac: Double;
@@ -182,7 +185,7 @@ var
 
 begin
   prog := 4;
-  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniRand.Caption + ']';
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniRand.Caption + ']';
   GroupBox1.Visible := True;
   pbMain.Canvas.Clear;
   xOff := -100; //pbMain.Canvas.Width div 2;
@@ -298,14 +301,14 @@ begin
   end;
 end;
 
-procedure TForm1.mniTriClick(Sender: TObject);
+procedure TfrmMain.mniTriClick(Sender: TObject);
 var
   b, f, i, j, k, m, n, n1, n2, s, xOff, yOff: Integer;
   p1, p2, x1, y1, xFac, yFac: Double;
   x, y: Array of Double;
 begin
   prog := 9;
-  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniTri.Caption + ']';
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniTri.Caption + ']';
   GroupBox1.Visible := True;
   pbMain.Canvas.Clear;
   seParameter.MaxValue := 3;
@@ -396,13 +399,13 @@ begin
   end;
 end;
 
-procedure TForm1.mniCycloideClick(Sender: TObject);
+procedure TfrmMain.mniCycloideClick(Sender: TObject);
 var
   k, m, n, xOff, yOff: Integer;
   t, x1, x2, y1, y2, xFac, yFac: Double;
 begin
   prog := 3;
-  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniCycloide.Caption + ']';
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniCycloide.Caption + ']';
   GroupBox1.Visible := False;
   pbMain.Canvas.Clear;
   //pbMain.Canvas.TextOut(pbMain.Canvas.Width div 2, pbMain.Canvas.Height div 2, 'C');
@@ -424,14 +427,14 @@ begin
   end;
 end;
 
-procedure TForm1.mniRaamClick(Sender: TObject);
+procedure TfrmMain.mniRaamClick(Sender: TObject);
 var
   f, j, k, m, n, n1, n2, s, x1, y1, xOff, yOff: Integer;
   xFac, yFac: Double;
   x, y: Array of Integer;
 begin
   prog := 6;
-  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniRaam.Caption + ']';
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniRaam.Caption + ']';
   GroupBox1.Visible := True;
   pbMain.Canvas.Clear;
   seParameter.MaxValue := 5;
@@ -531,7 +534,7 @@ begin
   end;
 end;
 
-procedure TForm1.mniRuitClick(Sender: TObject);
+procedure TfrmMain.mniRuitClick(Sender: TObject);
 var
   f, j, k, m, n, n1, n2, s, x0, x1, y1, xOff, yOff: Integer;
   xFac, yFac: Double;
@@ -554,7 +557,7 @@ var
 
 begin
   prog := 7;
-  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniRaam.Caption + ']';
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniRaam.Caption + ']';
   GroupBox1.Visible := True;
   pbMain.Canvas.Clear;
   seParameter.MaxValue := 2;
@@ -609,14 +612,14 @@ begin
   end;
 end;
 
-procedure TForm1.mniQuadrClick(Sender: TObject);
+procedure TfrmMain.mniQuadrClick(Sender: TObject);
 var
   f, i, j, k, m, n, n1, n2, s, x1, y1, xOff, yOff: Integer;
   p1, xFac, yFac: Double;
   x, y: Array of Double;
 begin
   prog := 8;
-  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniQuadr.Caption + ']';
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniQuadr.Caption + ']';
   GroupBox1.Visible := True;
   pbMain.Canvas.Clear;
   seParameter.MaxValue := 3;
@@ -704,14 +707,14 @@ begin
   end;
 end;
 
-procedure TForm1.mniHexaClick(Sender: TObject);
+procedure TfrmMain.mniHexaClick(Sender: TObject);
 var
   b, f, i, j, k, m, n, n1, n2, s, xOff, yOff: Integer;
   p1, x1, y1, xFac, yFac: Double;
   x, y: Array of Double;
 begin
   prog := 10;
-  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniHexa.Caption + ']';
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniHexa.Caption + ']';
   GroupBox1.Visible := True;
   pbMain.Canvas.Clear;
   seParameter.MaxValue := 2;
@@ -780,14 +783,82 @@ begin
   end;
 end;
 
-procedure TForm1.mniWervelClick(Sender: TObject);
+procedure TfrmMain.mniKleedClick(Sender: TObject);
+var
+  c, i, j, n, p1, p2, p3, p4, q1, q2, q3, q4, u, v: Integer;
+  x, y, z: Double;
+
+  procedure Gosub180;
+  begin
+    pbMain.Canvas.EllipseC(u,v,2,2);
+  end;
+
+  procedure Gosub140;
+  begin
+    u := p1;
+    v := q1;
+    Gosub180;
+    v := q2;
+    Gosub180;
+    u := p2;
+    v := q1;
+    Gosub180;
+    v := q2;
+    Gosub180;
+    u := p3;
+    v := q3;
+    Gosub180;
+    v := q4;
+    Gosub180;
+    u := p4;
+    v := q3;
+    Gosub180;
+    v := q4;
+    Gosub180;
+  end;
+
+begin
+  // Symmetrietype D(4)
+  pbMain.Canvas.Clear;
+  seParameter.MaxValue := 40;
+  seParameter.MinValue := 1;
+  lblParameter.Caption := 'Parameter N';
+  seParameter2.MaxValue := 150;
+  seParameter2.MinValue := 100;
+  lblParameter2.Caption := 'Parameter C';
+  GroupBox1.Visible := True;
+  prog := 11;
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniKleed.Caption + ']';
+  n := seParameter.Value;
+  c := seParameter2.Value;
+  for i := 0 to n do
+  begin
+    for j := 0 to i do
+    begin
+      x := i/n;
+      y := j/n;
+      p1 := 320+6*i;
+      p2 := 320-6*i;
+      q1 := 200+5*j;
+      q2 := 200-5*j;
+      p3 := 320+6*j;
+      p4 := 320-6*j;
+      q3 := 200+5*i;
+      q4 := 200-5*i;
+      z := (1-x*x)*(1-y*y);
+      if Trunc(c*z) mod 2 = 0 then Gosub140;
+    end;
+  end;
+end;
+
+procedure TfrmMain.mniWervelClick(Sender: TObject);
 var
   x, y: Array[0..7] of Double;
   i, j, k, l, m, n, xOff, yOff: Integer;
   a, c, f, t, xFac, yFac, z: Double;
 begin
   prog := 2;
-  Form1.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniWervel.Caption + ']';
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniWervel.Caption + ']';
   GroupBox1.Visible := False;
   pbMain.Canvas.Clear;
   xOff := pbMain.Canvas.Width div 2;
@@ -821,7 +892,7 @@ begin
   end;
 end;
 
-procedure TForm1.seParameter2Change(Sender: TObject);
+procedure TfrmMain.seParameter2Change(Sender: TObject);
 begin
   case prog of
     4: mniRandClick(Sender);
@@ -831,10 +902,11 @@ begin
     8: mniQuadrClick(Sender);
     9: mniTriClick(Sender);
     10: mniHexaClick(Sender);
+    11: mniKleedClick(Sender);
   end;
 end;
 
-procedure TForm1.seParameterChange(Sender: TObject);
+procedure TfrmMain.seParameterChange(Sender: TObject);
 begin
   case prog of
     4: mniRandClick(Sender);
@@ -844,6 +916,7 @@ begin
     8: mniQuadrClick(Sender);
     9: mniTriClick(Sender);
     10: mniHexaClick(Sender);
+    11: mniKleedClick(Sender);
   end;
 end;
 
