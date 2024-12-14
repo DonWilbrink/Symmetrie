@@ -785,7 +785,7 @@ end;
 
 procedure TfrmMain.mniKleedClick(Sender: TObject);
 var
-  c, i, j, n, p1, p2, p3, p4, q1, q2, q3, q4, u, v: Integer;
+  c, i, j, n, p1, p2, p3, p4, q1, q2, q3, q4, u, v, xm, ym: Integer;
   x, y, z: Double;
 
   procedure Gosub180;
@@ -820,7 +820,9 @@ var
 begin
   // Symmetrietype D(4)
   pbMain.Canvas.Clear;
-  seParameter.MaxValue := 40;
+  xm := pbMain.Canvas.Width div 2 - 100;
+  ym := pbMain.Canvas.Height div 2;
+  seParameter.MaxValue := 50;
   seParameter.MinValue := 1;
   lblParameter.Caption := 'Parameter N';
   seParameter2.MaxValue := 150;
@@ -837,14 +839,14 @@ begin
     begin
       x := i/n;
       y := j/n;
-      p1 := 320+6*i;
-      p2 := 320-6*i;
-      q1 := 200+5*j;
-      q2 := 200-5*j;
-      p3 := 320+6*j;
-      p4 := 320-6*j;
-      q3 := 200+5*i;
-      q4 := 200-5*i;
+      p1 := xm+6*i;
+      p2 := xm-6*i;
+      q1 := ym+5*j;
+      q2 := ym-5*j;
+      p3 := xm+6*j;
+      p4 := xm-6*j;
+      q3 := ym+5*i;
+      q4 := ym-5*i;
       z := (1-x*x)*(1-y*y);
       if Trunc(c*z) mod 2 = 0 then Gosub140;
     end;

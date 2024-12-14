@@ -47,7 +47,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="bin/$(TargetCPU)-$(TargetOS)/symmetrie"/>
+      <Filename Value="bin\$(TargetCPU)-$(TargetOS)\symmetrie"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>

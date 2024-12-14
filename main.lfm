@@ -1,14 +1,14 @@
 object frmMain: TfrmMain
   Left = 349
-  Height = 715
+  Height = 572
   Top = 32
-  Width = 1186
+  Width = 949
   Caption = 'Symmetrie. Regelmatige structuren in de kunst.'
-  ClientHeight = 715
-  ClientWidth = 1186
-  DesignTimePPI = 120
+  ClientHeight = 572
+  ClientWidth = 949
   Menu = MainMenu1
   Position = poDesktopCenter
+  LCLVersion = '3.4.0.0'
   object pbMain: TPaintBox
     Left = 0
     Height = 715
@@ -20,67 +20,67 @@ object frmMain: TfrmMain
     ParentColor = False
   end
   object Panel1: TPanel
-    Left = 944
+    Left = 992
     Height = 715
     Top = 0
-    Width = 242
+    Width = 194
     Align = alRight
     ClientHeight = 715
-    ClientWidth = 242
+    ClientWidth = 194
     Color = clSkyBlue
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object GroupBox1: TGroupBox
-      Left = 16
-      Height = 208
-      Top = 8
-      Width = 190
+      Left = 13
+      Height = 166
+      Top = 6
+      Width = 152
       Caption = 'Parameters'
-      ClientHeight = 183
-      ClientWidth = 186
+      ClientHeight = 145
+      ClientWidth = 148
       Color = clSkyBlue
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
       Visible = False
       object lblParameter: TLabel
-        Left = 16
+        Left = 13
         Height = 20
-        Top = 10
+        Top = 8
         Width = 84
         Caption = 'lblParameter'
       end
       object seParameter: TSpinEdit
-        Left = 16
+        Left = 13
         Height = 28
-        Top = 40
-        Width = 63
+        Top = 32
+        Width = 50
+        OnChange = seParameterChange
         TabOrder = 0
         Value = 1
-        OnChange = seParameterChange
       end
       object seParameter2: TSpinEdit
-        Left = 16
+        Left = 13
         Height = 28
-        Top = 128
-        Width = 63
+        Top = 102
+        Width = 50
+        OnChange = seParameter2Change
         TabOrder = 1
         Value = 12
-        OnChange = seParameter2Change
       end
       object lblParameter2: TLabel
-        Left = 16
+        Left = 13
         Height = 20
-        Top = 88
+        Top = 70
         Width = 92
         Caption = 'lblParameter2'
       end
     end
   end
   object MainMenu1: TMainMenu
-    Left = 69
-    Top = 81
+    Left = 55
+    Top = 65
     object mniHoofdstuk2: TMenuItem
       Caption = 'Hoofdstuk 2'
       object mniBloem: TMenuItem
