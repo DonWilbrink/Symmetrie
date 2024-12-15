@@ -17,6 +17,7 @@ type
     lblParameter2: TLabel;
     lblParameter: TLabel;
     MainMenu1: TMainMenu;
+    mniStempel: TMenuItem;
     mniKleed: TMenuItem;
     mniHoofdstuk7: TMenuItem;
     mniHexa: TMenuItem;
@@ -45,6 +46,7 @@ type
     procedure mniBloemClick(Sender: TObject);
     procedure mniParalClick(Sender: TObject);
     procedure mniRandClick(Sender: TObject);
+    procedure mniStempelClick(Sender: TObject);
     procedure mniTriClick(Sender: TObject);
     procedure mniWervelClick(Sender: TObject);
     procedure seParameter2Change(Sender: TObject);
@@ -296,6 +298,104 @@ begin
         p := -p;
         Gosub450;
         i := i+2;
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmMain.mniStempelClick(Sender: TObject);
+var
+  x, y: Array of Array of Double;
+  DATA : array[1..32] of Double = (
+         1,-3,1,-1,3,-1,1,3,1,1,3,1,
+          -3,-1,-1,-1,-1,1,-3,1,-1,-3,-1,-2,0,-2,0,2,-1,2,-1,3);
+  m: Array [1..4] of Integer;
+  s: Array [0..3] of Integer;
+  xFac, yFac: Double;
+  i, j, k, l, mm, p, q, ss, w, xx, yy, xOff, yOff: Integer;
+begin
+  prog := 12;
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniStempel.Caption + ']';
+  GroupBox1.Visible := True;
+  pbMain.Canvas.Clear;
+  xFac := pbMain.Canvas.Width/160;
+  yFac := pbMain.Canvas.Height/120;
+  xOff := 100;
+  yOff := 100;
+  seParameter.MaxValue := 8;
+  seParameter.MinValue := 1;
+  lblParameter.Caption := 'Stand1';
+  seParameter2.MaxValue := 8;
+  seParameter2.MinValue := 1;
+  lblParameter2.Caption := 'Stand2';
+  mm := 4;
+  m[1] := 3;
+  m[2] := 3;
+  m[3] := 4;
+  m[4] := 6;
+  I:=1;
+  SetLength(x,5,7);
+  SetLength(y,5,7);
+  FOR K:=1 TO MM do
+    begin
+      FOR L:=1 TO M[K] do
+        begin
+          X[K,L]:=DATA[I];
+          Y[K,L]:=DATA[I+1];
+          inc(I,2);
+        end;
+    end;
+  s[0] := seParameter.Value;
+  s[1] := seParameter2.Value;
+  s[2] := 1;
+  s[3] := 1;
+  pbMain.Canvas.MoveTo(Round(xFac*-3+xOff),Round(yFac*-3+yOff));
+  pbMain.Canvas.LineTo(Round(xFac*-3+xOff),Round(yFac*69+yOff));
+  pbMain.Canvas.LineTo(Round(xFac*93+xOff),Round(yFac*69+yOff));
+  pbMain.Canvas.LineTo(Round(xFac*93+xOff),Round(yFac*-3+yOff));
+  pbMain.Canvas.LineTo(Round(xFac*-3+xOff),Round(yFac*-3+yOff));
+  for j := 0 to 11 do
+  begin
+    for i := 0 to 15 do
+    begin
+      xx := 6*i;
+      yy := 6*j;
+      if j mod 2 = 0 then
+        w := 0
+      else
+        w := 2;
+      if i mod 2 = 1 then
+        w := w+1;
+      ss := s[w];
+      if (ss = 1) or (ss = 2) or (ss = 5) or (ss = 6) then
+        p := 1
+      else
+        p := -1;
+      if (ss = 1) or (ss = 4) or (ss = 6) or (ss = 7) then
+        q := 1
+      else
+        q := -1;
+      if ss mod 2 = 1 then
+      begin
+        for k := 1 to mm do
+        begin
+          pbMain.Canvas.MoveTo(Round(xFac*(xx + P * X[K, 1])+xOff), Round(yFac*(yy + Q * Y[K, 1])+yOff));
+          for l := 2 to m[k] do
+          begin
+            pbMain.Canvas.LineTo(Round(xFac*(xx + P * X[K, L])+xOff), Round(yFac*(yy + Q * Y[K, L])+yOff));
+          end;
+        end;
+      end
+      else
+      begin
+        for k := 1 to mm do
+        begin
+          pbMain.Canvas.MoveTo(Round(xFac*(xx + P * y[K, 1])+xOff), Round(yFac*(yy + Q * x[K, 1])+yOff));
+          for l := 2 to m[k] do
+          begin
+            pbMain.Canvas.LineTo(Round(xFac*(xx + P * y[K, L])+xOff), Round(yFac*(yy + Q * x[K, L])+yOff));
+          end;
+        end;
       end;
     end;
   end;
@@ -905,6 +1005,7 @@ begin
     9: mniTriClick(Sender);
     10: mniHexaClick(Sender);
     11: mniKleedClick(Sender);
+    12: mniStempelClick(Sender);
   end;
 end;
 
@@ -919,6 +1020,7 @@ begin
     9: mniTriClick(Sender);
     10: mniHexaClick(Sender);
     11: mniKleedClick(Sender);
+    12: mniStempelClick(Sender);
   end;
 end;
 

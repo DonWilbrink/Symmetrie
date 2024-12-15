@@ -8,24 +8,23 @@ object frmMain: TfrmMain
   ClientWidth = 949
   Menu = MainMenu1
   Position = poDesktopCenter
-  LCLVersion = '3.4.0.0'
   object pbMain: TPaintBox
     Left = 0
-    Height = 715
+    Height = 572
     Top = 0
-    Width = 944
+    Width = 755
     Align = alClient
     Anchors = [akTop, akLeft, akBottom]
     Color = clMoneyGreen
     ParentColor = False
   end
   object Panel1: TPanel
-    Left = 992
-    Height = 715
+    Left = 755
+    Height = 572
     Top = 0
     Width = 194
     Align = alRight
-    ClientHeight = 715
+    ClientHeight = 572
     ClientWidth = 194
     Color = clSkyBlue
     ParentBackground = False
@@ -46,14 +45,14 @@ object frmMain: TfrmMain
       Visible = False
       object lblParameter: TLabel
         Left = 13
-        Height = 20
+        Height = 19
         Top = 8
-        Width = 84
+        Width = 87
         Caption = 'lblParameter'
       end
       object seParameter: TSpinEdit
         Left = 13
-        Height = 28
+        Height = 29
         Top = 32
         Width = 50
         OnChange = seParameterChange
@@ -62,7 +61,7 @@ object frmMain: TfrmMain
       end
       object seParameter2: TSpinEdit
         Left = 13
-        Height = 28
+        Height = 29
         Top = 102
         Width = 50
         OnChange = seParameter2Change
@@ -71,9 +70,9 @@ object frmMain: TfrmMain
       end
       object lblParameter2: TLabel
         Left = 13
-        Height = 20
+        Height = 19
         Top = 70
-        Width = 92
+        Width = 95
         Caption = 'lblParameter2'
       end
     end
@@ -135,6 +134,10 @@ object frmMain: TfrmMain
       object mniKleed: TMenuItem
         Caption = 'Borduurkleed bepaald door een wiskundige functie'
         OnClick = mniKleedClick
+      end
+      object mniStempel: TMenuItem
+        Caption = 'Stempelafdrukken in blokken van vier'
+        OnClick = mniStempelClick
       end
     end
   end
