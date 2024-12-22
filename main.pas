@@ -17,6 +17,7 @@ type
     lblParameter2: TLabel;
     lblParameter: TLabel;
     MainMenu1: TMainMenu;
+    mniParket1: TMenuItem;
     mniStempel: TMenuItem;
     mniKleed: TMenuItem;
     mniHoofdstuk7: TMenuItem;
@@ -39,6 +40,7 @@ type
     seParameter2: TSpinEdit;
     procedure mniHexaClick(Sender: TObject);
     procedure mniKleedClick(Sender: TObject);
+    procedure mniParket1Click(Sender: TObject);
     procedure mniQuadrClick(Sender: TObject);
     procedure mniRuitClick(Sender: TObject);
     procedure mniRaamClick(Sender: TObject);
@@ -953,6 +955,75 @@ begin
   end;
 end;
 
+procedure TfrmMain.mniParket1Click(Sender: TObject);
+var
+  i, j, t, ss, w, xOff, yOff: Integer;
+  xFac, yFac: Double;
+  s: Array [0..3] of Integer;
+begin
+  prog := 13;
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniParket1.Caption + ']';
+  GroupBox1.Visible := True;
+  pbMain.Canvas.Clear;
+  xOff := 50;
+  yOff := 50;
+  yFac := pbMain.Canvas.Height/16;
+  xFac := yFac;
+  seParameter.MaxValue := 256;
+  seParameter.MinValue := 1;
+  lblParameter.Caption := 'Patroon';
+  seParameter2.MaxValue := 15;
+  seParameter2.MinValue := 0;
+  lblParameter2.Caption := 'Kleur';
+  t := seParameter.Value;
+  pbMain.Canvas.Brush.Color := EgaColor[seParameter2.Value];
+  //pbMain.Canvas.Pen.Color := clBlack;
+  for i := 0 to 3 do
+  begin
+    s[i] := t mod 4;
+    t := t div 4;
+  end;
+  for i := 0 to 16 do
+    pbMain.Canvas.Line(Round(xFac*(i-0.5)+xOff),Round(yFac*-0.5+yOff),Round(xFac*(i-0.5)+xOff),Round(yFac*11.5+yOff));
+  for j := 0 to 12 do
+    pbMain.Canvas.Line(Round(xFac*-0.5+xOff),Round(yFac*(j-0.5)+yOff),Round(xFac*15.5+xOff),Round(yFac*(j-0.5)+yOff));
+  for j := 0 to 11 do
+  begin
+    for i := 0 to 15 do
+    begin
+      if j mod 2 = 0 then w := 0 else w := 2;
+      if i mod 2 = 1 then w := w + 1;
+      ss := s[w] + 1;
+      case ss of
+        1:
+        begin
+          pbMain.Canvas.Line(Round(xFac*(i-0.5)+xOff),Round(yFac*(j+0.5)+yOff),Round(xFac*(i+0.5)+xOff),Round(yFac*(j-0.5)+yOff));
+          pbMain.Canvas.FloodFill(Round(xFac*(i-0.2)+xOff),Round(yFac*(j-0.2)+yOff),clBlack,fsBorder);
+          //pbMain.Canvas.Ellipse(5,5,20,20);
+          //pbMain.Canvas.FloodFill(100,100,clBlack,fsBorder);
+          //pbMain.Canvas.EllipseC(Round(xFac*(i-0.2)+xOff),Round(yFac*(j-0.2)+yOff),3,3);
+        end;
+        2:
+        begin
+          pbMain.Canvas.Line(Round(xFac*(i-0.5)+xOff),Round(yFac*(j-0.5)+yOff),Round(xFac*(i+0.5)+xOff),Round(yFac*(j+0.5)+yOff));
+          pbMain.Canvas.FloodFill(Round(xFac*(i+0.2)+xOff),Round(yFac*(j-0.2)+yOff),clBlack,fsBorder);
+        end;
+        3:
+        begin
+          pbMain.Canvas.Line(Round(xFac*(i-0.5)+xOff),Round(yFac*(j+0.5)+yOff),Round(xFac*(i+0.5)+xOff),Round(yFac*(j-0.5)+yOff));
+          pbMain.Canvas.FloodFill(Round(xFac*(i+0.2)+xOff),Round(yFac*(j+0.2)+yOff),clBlack,fsBorder);
+        end;
+        4:
+        begin
+          pbMain.Canvas.Line(Round(xFac*(i-0.5)+xOff),Round(yFac*(j-0.5)+yOff),Round(xFac*(i+0.5)+xOff),Round(yFac*(j+0.5)+yOff));
+          pbMain.Canvas.FloodFill(Round(xFac*(i-0.2)+xOff),Round(yFac*(j+0.2)+yOff),clBlack,fsBorder);
+        end;
+      end;
+    end;
+  end;
+  pbMain.Canvas.Brush.Color := clWhite;
+end;
+
 procedure TfrmMain.mniWervelClick(Sender: TObject);
 var
   x, y: Array[0..7] of Double;
@@ -1006,6 +1077,7 @@ begin
     10: mniHexaClick(Sender);
     11: mniKleedClick(Sender);
     12: mniStempelClick(Sender);
+    13: mniParket1Click(Sender);
   end;
 end;
 
@@ -1021,6 +1093,7 @@ begin
     10: mniHexaClick(Sender);
     11: mniKleedClick(Sender);
     12: mniStempelClick(Sender);
+    13: mniParket1Click(Sender);
   end;
 end;
 
