@@ -78,7 +78,7 @@ Function Build-Project {
             } { $Result | Out-Host }
     }
     Get-ChildItem -Filter '*.lpi' -Recurse -File –Path $VAR.Src |
-        Where-Object { $_ -like 'backup' } |
+        Where-Object { $_ -notlike 'backup' } |
         ForEach-Object {
             $Result = @()
             $exitCode = 0
