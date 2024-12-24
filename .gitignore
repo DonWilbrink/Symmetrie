@@ -72,3 +72,5 @@ modules/
 backup/
 lib/
 bin/
+*res
+*lps
