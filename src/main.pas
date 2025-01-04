@@ -14,9 +14,12 @@ type
 
   TfrmMain = class(TForm)
     GroupBox1: TGroupBox;
+    lblParameter3: TLabel;
+    lblParameter4: TLabel;
     lblParameter2: TLabel;
     lblParameter: TLabel;
     MainMenu1: TMainMenu;
+    mniParket2: TMenuItem;
     mniParket1: TMenuItem;
     mniStempel: TMenuItem;
     mniKleed: TMenuItem;
@@ -38,9 +41,12 @@ type
     pbMain: TPaintBox;
     seParameter: TSpinEdit;
     seParameter2: TSpinEdit;
+    seParameter3: TSpinEdit;
+    seParameter4: TSpinEdit;
     procedure mniHexaClick(Sender: TObject);
     procedure mniKleedClick(Sender: TObject);
     procedure mniParket1Click(Sender: TObject);
+    procedure mniParket2Click(Sender: TObject);
     procedure mniQuadrClick(Sender: TObject);
     procedure mniRuitClick(Sender: TObject);
     procedure mniRaamClick(Sender: TObject);
@@ -52,9 +58,11 @@ type
     procedure mniTriClick(Sender: TObject);
     procedure mniWervelClick(Sender: TObject);
     procedure seParameter2Change(Sender: TObject);
+    procedure seParameter3Change(Sender: TObject);
+    procedure seParameter4Change(Sender: TObject);
     procedure seParameterChange(Sender: TObject);
   private
-
+    procedure ClearPb;
   public
 
   end;
@@ -79,9 +87,8 @@ var
   a, c, k, m, n, xOff, yOff: Integer;
   b, r, t, x, y, xFac, yFac: Double;
 begin
-  GroupBox1.Visible := False;
-  pbMain.Canvas.Clear;
   prog := 1;
+  ClearPb;
   frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniBloem.Caption + ']';
   a := 1;
   b := 1.5;
@@ -111,12 +118,16 @@ var
 begin
   prog := 5;
   frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniParal.Caption + ']';
+  ClearPb;
   GroupBox1.Visible := True;
-  pbMain.Canvas.Clear;
+  lblParameter.Visible := True;
+  seParameter.Visible := True;
   seParameter.MaxValue := 2;
   seParameter.MinValue := 1;
   //seParameter.Value := 1;
   lblParameter.Caption := 'Rangnummer';
+  lblParameter2.Visible := True;
+  seParameter2.Visible := True;
   seParameter2.MaxValue := 5;
   seParameter2.MinValue := 1;
   lblParameter2.Caption := 'Schaalfactor motief';
@@ -190,15 +201,19 @@ var
 begin
   prog := 4;
   frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniRand.Caption + ']';
+  ClearPb;
   GroupBox1.Visible := True;
-  pbMain.Canvas.Clear;
   xOff := -100; //pbMain.Canvas.Width div 2;
   yOff := pbMain.Canvas.Height div 2;
   yFac := pbMain.Canvas.Height / 128;
   xFac := pbMain.Canvas.Width / 240;
+  lblParameter.Visible := True;
+  seParameter.Visible := True;
   seParameter.MaxValue := 7;
   seParameter.MinValue := 1;
   lblParameter.Caption := 'Typekeuze';
+  lblParameter2.Visible := True;
+  seParameter2.Visible := True;
   seParameter2.MaxValue := 12;
   seParameter2.MinValue := 5;
   lblParameter2.Caption := 'Horizontale verplaatsing';
@@ -318,15 +333,19 @@ var
 begin
   prog := 12;
   frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniStempel.Caption + ']';
+  ClearPb;
   GroupBox1.Visible := True;
-  pbMain.Canvas.Clear;
   xFac := pbMain.Canvas.Width/160;
   yFac := pbMain.Canvas.Height/120;
   xOff := 100;
   yOff := 100;
+  lblParameter.Visible := True;
+  seParameter.Visible := True;
   seParameter.MaxValue := 8;
   seParameter.MinValue := 1;
   lblParameter.Caption := 'Stand1';
+  lblParameter2.Visible := True;
+  seParameter2.Visible := True;
   seParameter2.MaxValue := 8;
   seParameter2.MinValue := 1;
   lblParameter2.Caption := 'Stand2';
@@ -411,15 +430,14 @@ var
 begin
   prog := 9;
   frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniTri.Caption + ']';
+  ClearPb;
   GroupBox1.Visible := True;
-  pbMain.Canvas.Clear;
+  lblParameter.Visible := True;
+  seParameter.Visible := True;
   seParameter.MaxValue := 3;
   seParameter.MinValue := 1;
   //seParameter.Value := 1;
   lblParameter.Caption := 'Rangnummer';
-  seParameter2.MaxValue := 5;
-  seParameter2.MinValue := 1;
-  lblParameter2.Caption := 'Niet gebruikt';
   xFac := pbMain.Width/80;
   yFac := pbMain.Height/60;
   xOff := 0;
@@ -508,8 +526,7 @@ var
 begin
   prog := 3;
   frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniCycloide.Caption + ']';
-  GroupBox1.Visible := False;
-  pbMain.Canvas.Clear;
+  ClearPb;
   //pbMain.Canvas.TextOut(pbMain.Canvas.Width div 2, pbMain.Canvas.Height div 2, 'C');
   xOff := pbMain.Canvas.Width div 2;
   yOff := pbMain.Canvas.Height div 2;
@@ -537,15 +554,13 @@ var
 begin
   prog := 6;
   frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniRaam.Caption + ']';
+  ClearPb;
   GroupBox1.Visible := True;
-  pbMain.Canvas.Clear;
+  lblParameter.Visible := True;
+  seParameter.Visible := True;
   seParameter.MaxValue := 5;
   seParameter.MinValue := 1;
   //seParameter.Value := 1;
-  lblParameter.Caption := 'Rangnummer';
-  seParameter2.MaxValue := 5;
-  seParameter2.MinValue := 1;
-  lblParameter2.Caption := 'Niet gebruikt';
   xFac := pbMain.Width/80;
   yFac := pbMain.Height/60;
   xOff := 0;
@@ -660,15 +675,14 @@ var
 begin
   prog := 7;
   frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniRaam.Caption + ']';
+  ClearPb;
   GroupBox1.Visible := True;
-  pbMain.Canvas.Clear;
+  lblParameter.Visible := True;
+  seParameter.Visible := True;
   seParameter.MaxValue := 2;
   seParameter.MinValue := 1;
   //seParameter.Value := 1;
   lblParameter.Caption := 'Rangnummer';
-  seParameter2.MaxValue := 5;
-  seParameter2.MinValue := 1;
-  lblParameter2.Caption := 'Niet gebruikt';
   xFac := pbMain.Width/80;
   yFac := pbMain.Height/60;
   xOff := 0;
@@ -722,14 +736,13 @@ var
 begin
   prog := 8;
   frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniQuadr.Caption + ']';
+  ClearPb;
   GroupBox1.Visible := True;
-  pbMain.Canvas.Clear;
+  lblParameter.Visible := True;
+  seParameter.Visible := True;
   seParameter.MaxValue := 3;
   seParameter.MinValue := 1;
   //seParameter.Value := 1;   ummer';
-  seParameter2.MaxValue := 5;
-  seParameter2.MinValue := 1;
-  lblParameter2.Caption := 'Niet gebruikt';
   xFac := pbMain.Width/80;
   yFac := pbMain.Height/60;
   xOff := 0;
@@ -817,14 +830,13 @@ var
 begin
   prog := 10;
   frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniHexa.Caption + ']';
+  ClearPb;
   GroupBox1.Visible := True;
-  pbMain.Canvas.Clear;
+  lblParameter.Visible := True;
+  seParameter.Visible := True;
   seParameter.MaxValue := 2;
   seParameter.MinValue := 1;
   lblParameter.Caption := 'Rangnummer';
-  seParameter2.MaxValue := 5;
-  seParameter2.MinValue := 1;
-  lblParameter2.Caption := 'Niet gebruikt';
   xFac := pbMain.Width/80;
   yFac := pbMain.Height/60;
   xOff := 0;
@@ -921,17 +933,21 @@ var
 
 begin
   // Symmetrietype D(4)
-  pbMain.Canvas.Clear;
+  prog := 11;
+  ClearPb;
   xm := pbMain.Canvas.Width div 2 - 100;
   ym := pbMain.Canvas.Height div 2;
+  lblParameter.Visible := True;
+  seParameter.Visible := True;
   seParameter.MaxValue := 50;
   seParameter.MinValue := 1;
   lblParameter.Caption := 'Parameter N';
+  lblParameter2.Visible := True;
+  seParameter2.Visible := True;
   seParameter2.MaxValue := 150;
   seParameter2.MinValue := 100;
   lblParameter2.Caption := 'Parameter C';
   GroupBox1.Visible := True;
-  prog := 11;
   frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniKleed.Caption + ']';
   n := seParameter.Value;
   c := seParameter2.Value;
@@ -963,15 +979,19 @@ var
 begin
   prog := 13;
   frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniParket1.Caption + ']';
+  ClearPb;
   GroupBox1.Visible := True;
-  pbMain.Canvas.Clear;
   xOff := 50;
   yOff := 50;
   yFac := pbMain.Canvas.Height/16;
   xFac := yFac;
+  lblParameter.Visible := True;
+  seParameter.Visible := True;
   seParameter.MaxValue := 256;
   seParameter.MinValue := 1;
   lblParameter.Caption := 'Patroon';
+  lblParameter2.Visible := True;
+  seParameter2.Visible := True;
   seParameter2.MaxValue := 15;
   seParameter2.MinValue := 0;
   lblParameter2.Caption := 'Kleur';
@@ -1024,6 +1044,89 @@ begin
   pbMain.Canvas.Brush.Color := clWhite;
 end;
 
+procedure TfrmMain.mniParket2Click(Sender: TObject);
+var
+  i , j, w, xOff, yOff: Integer;
+  xFac, yFac: Double;
+  s: Array[0..3] of Integer;
+begin
+  prog := 14;
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniParket2.Caption + ']';
+  ClearPb;
+  GroupBox1.Visible := True;
+  xOff := 50;
+  yOff := 50;
+  yFac := pbMain.Canvas.Height/16;
+  xFac := yFac;
+  lblParameter.Visible := True;
+  seParameter.Visible := True;
+  seParameter.MaxValue := 4;
+  seParameter.MinValue := 1;
+  lblParameter.Caption := 'Stand tegel 1';
+  lblParameter2.Visible := True;
+  seParameter2.Visible := True;
+  seParameter2.MaxValue := 4;
+  seParameter2.MinValue := 1;
+  lblParameter2.Caption := 'Stand tegel 2';
+  lblParameter3.Visible := True;
+  seParameter3.Visible := True;
+  seParameter3.MaxValue := 4;
+  seParameter3.MinValue := 1;
+  lblParameter3.Caption := 'Stand tegel 3';
+  lblParameter4.Visible := True;
+  seParameter4.Visible := True;
+  seParameter4.MaxValue := 4;
+  seParameter4.MinValue := 1;
+  lblParameter4.Caption := 'Stand tegel 4';
+  s[0] := seParameter.Value;
+  s[1] := seParameter2.Value;
+  s[2] := seParameter3.Value;
+  s[3] := seParameter4.Value;
+  pbMain.Canvas.Brush.Color := clBlack;
+  for i := 0 to 16 do
+    pbMain.Canvas.Line(Round(xFac*(i-0.5)+xOff),Round(yFac*-0.5+yOff),
+    Round(xFac*(i-0.5)+xOff),Round(yFac*11.5+yOff));
+  for j := 0 to 12 do
+    pbMain.Canvas.Line(Round(xFac*(-0.5)+xOff),Round(yFac*(j-0.5)+yOff),
+    Round(xFac*(15.5)+xOff),Round(yFac*(j-0.5)+yOff));
+  for j := 0 to 11 do
+  begin
+    for i := 0 to 15 do
+    begin
+      if j mod 2 = 0 then w := 0 else w := 2;
+      if i mod 2 = 1 then w := w + 1;
+      case s[w] of
+        0:
+        begin
+          pbMain.Canvas.Line(Round(xFac*(i-0.5)+xOff),Round(yFac*(j+0.5)+yOff),
+          Round(xFac*(i+0.5)+xOff),Round(yFac*(j-0.5)+yOff));
+          pbMain.Canvas.FloodFill(Round(xFac*(i-0.2)+xOff),Round(yFac*(j-0.2)+yOff),clBlack,fsBorder);
+        end;
+        1:
+        begin
+          pbMain.Canvas.Line(Round(xFac*(i-0.5)+xOff),Round(yFac*(j-0.5)+yOff),
+          Round(xFac*(i+0.5)+xOff),Round(yFac*(j+0.5)+yOff));
+          pbMain.Canvas.FloodFill(Round(xFac*(i+0.2)+xOff),Round(yFac*(j-0.2)+yOff),clBlack,fsBorder);
+        end;
+        2:
+        begin
+          pbMain.Canvas.Line(Round(xFac*(i-0.5)+xOff),Round(yFac*(j+0.5)+yOff),
+          Round(xFac*(i+0.5)+xOff),Round(yFac*(j-0.5)+yOff));
+          pbMain.Canvas.FloodFill(Round(xFac*(i+0.2)+xOff),Round(yFac*(j+0.2)+yOff),clBlack,fsBorder);
+        end;
+        3:
+        begin
+          pbMain.Canvas.Line(Round(xFac*(i-0.5)+xOff),Round(yFac*(j-0.5)+yOff),
+          Round(xFac*(i+0.5)+xOff),Round(yFac*(j+0.5)+yOff));
+          pbMain.Canvas.FloodFill(Round(xFac*(i-0.2)+xOff),Round(yFac*(j+0.2)+yOff),clBlack,fsBorder);
+        end;
+      end;
+    end;
+  end;
+  pbMain.Canvas.Brush.Color := clWhite;
+end;
+
+
 procedure TfrmMain.mniWervelClick(Sender: TObject);
 var
   x, y: Array[0..7] of Double;
@@ -1032,8 +1135,7 @@ var
 begin
   prog := 2;
   frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniWervel.Caption + ']';
-  GroupBox1.Visible := False;
-  pbMain.Canvas.Clear;
+  ClearPb;
   xOff := pbMain.Canvas.Width div 2;
   yOff := pbMain.Canvas.Height div 2;
   yFac := -pbMain.Canvas.Height/2.2;
@@ -1078,6 +1180,21 @@ begin
     11: mniKleedClick(Sender);
     12: mniStempelClick(Sender);
     13: mniParket1Click(Sender);
+    14: mniParket2Click(Sender);
+  end;
+end;
+
+procedure TfrmMain.seParameter3Change(Sender: TObject);
+begin
+  case prog of
+    14: mniParket2Click(Sender);
+  end;
+end;
+
+procedure TfrmMain.seParameter4Change(Sender: TObject);
+begin
+   case prog of
+    14: mniParket2Click(Sender);
   end;
 end;
 
@@ -1094,7 +1211,25 @@ begin
     11: mniKleedClick(Sender);
     12: mniStempelClick(Sender);
     13: mniParket1Click(Sender);
+    14: mniParket2Click(Sender);
   end;
+end;
+
+procedure TfrmMain.ClearPb;
+begin
+  pbMain.Canvas.Clear;
+  //pbMain.Canvas.Brush.Color := clWhite;
+  //pbMain.Canvas.FillRect(0,0,pbMain.Canvas.Width,pbMain.Canvas.Height);
+  //Application.ProcessMessages;
+  GroupBox1.Visible := False;
+  lblParameter.Visible := False;
+  seParaMeter.Visible := False;
+  lblParameter2.Visible := False;
+  seParaMeter2.Visible := False;
+  lblParameter3.Visible := False;
+  seParaMeter3.Visible := False;
+  lblParameter4.Visible := False;
+  seParaMeter4.Visible := False;
 end;
 
 end.

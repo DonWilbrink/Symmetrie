@@ -7,26 +7,26 @@ object frmMain: TfrmMain
   ClientHeight = 715
   ClientWidth = 1186
   DesignTimePPI = 120
+  Font.Height = -15
   Menu = MainMenu1
   Position = poDesktopCenter
-  LCLVersion = '4.0.0.1'
   object pbMain: TPaintBox
     Left = 0
-    Height = 572
+    Height = 715
     Top = 0
-    Width = 755
+    Width = 944
     Align = alClient
     Anchors = [akTop, akLeft, akBottom]
     Color = clWhite
     ParentColor = False
   end
   object Panel1: TPanel
-    Left = 707
-    Height = 572
+    Left = 944
+    Height = 715
     Top = 0
     Width = 242
     Align = alRight
-    ClientHeight = 572
+    ClientHeight = 715
     ClientWidth = 242
     Color = clSkyBlue
     ParentBackground = False
@@ -34,11 +34,11 @@ object frmMain: TfrmMain
     TabOrder = 0
     object GroupBox1: TGroupBox
       Left = 16
-      Height = 208
+      Height = 384
       Top = 8
       Width = 190
       Caption = 'Parameters'
-      ClientHeight = 187
+      ClientHeight = 359
       ClientWidth = 186
       Color = clSkyBlue
       ParentBackground = False
@@ -47,14 +47,14 @@ object frmMain: TfrmMain
       Visible = False
       object lblParameter: TLabel
         Left = 16
-        Height = 19
+        Height = 20
         Top = 10
-        Width = 87
+        Width = 84
         Caption = 'lblParameter'
       end
       object seParameter: TSpinEdit
         Left = 16
-        Height = 29
+        Height = 28
         Top = 40
         Width = 62
         TabOrder = 0
@@ -63,7 +63,7 @@ object frmMain: TfrmMain
       end
       object seParameter2: TSpinEdit
         Left = 16
-        Height = 29
+        Height = 28
         Top = 128
         Width = 62
         TabOrder = 1
@@ -72,10 +72,42 @@ object frmMain: TfrmMain
       end
       object lblParameter2: TLabel
         Left = 16
-        Height = 19
+        Height = 20
         Top = 88
-        Width = 95
+        Width = 92
         Caption = 'lblParameter2'
+      end
+      object lblParameter3: TLabel
+        Left = 16
+        Height = 20
+        Top = 176
+        Width = 92
+        Caption = 'lblParameter3'
+      end
+      object lblParameter4: TLabel
+        Left = 16
+        Height = 20
+        Top = 256
+        Width = 92
+        Caption = 'lblParameter4'
+      end
+      object seParameter3: TSpinEdit
+        Left = 16
+        Height = 28
+        Top = 209
+        Width = 63
+        TabOrder = 2
+        Value = 1
+        OnChange = seParameter3Change
+      end
+      object seParameter4: TSpinEdit
+        Left = 16
+        Height = 28
+        Top = 296
+        Width = 63
+        TabOrder = 3
+        Value = 1
+        OnChange = seParameter4Change
       end
     end
   end
@@ -144,6 +176,10 @@ object frmMain: TfrmMain
       object mniParket1: TMenuItem
         Caption = 'PARKET MET WIT-ZWARTE VIERKANTEN IN BLOKKEN VAN VIER'
         OnClick = mniParket1Click
+      end
+      object mniParket2: TMenuItem
+        Caption = 'PARKET MET WIT-ZWARTE VIERKANTEN IN BLOKKEN VAN VIER'
+        OnClick = mniParket2Click
       end
     end
   end
