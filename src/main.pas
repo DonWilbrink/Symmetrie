@@ -1096,28 +1096,27 @@ begin
       if j mod 2 = 0 then w := 0 else w := 2;
       if i mod 2 = 1 then w := w + 1;
       case s[w] of
-        0:
+        1:
         begin
           pbMain.Canvas.Line(Round(xFac*(i-0.5)+xOff),Round(yFac*(j+0.5)+yOff),
           Round(xFac*(i+0.5)+xOff),Round(yFac*(j-0.5)+yOff));
           pbMain.Canvas.FloodFill(Round(xFac*(i-0.2)+xOff),Round(yFac*(j-0.2)+yOff),clBlack,fsBorder);
         end;
-        1:
+        2:
         begin
           pbMain.Canvas.Line(Round(xFac*(i-0.5)+xOff),Round(yFac*(j-0.5)+yOff),
           Round(xFac*(i+0.5)+xOff),Round(yFac*(j+0.5)+yOff));
           pbMain.Canvas.FloodFill(Round(xFac*(i+0.2)+xOff),Round(yFac*(j-0.2)+yOff),clBlack,fsBorder);
         end;
-        2:
+        3:
         begin
           pbMain.Canvas.Line(Round(xFac*(i-0.5)+xOff),Round(yFac*(j+0.5)+yOff),
           Round(xFac*(i+0.5)+xOff),Round(yFac*(j-0.5)+yOff));
           pbMain.Canvas.FloodFill(Round(xFac*(i+0.2)+xOff),Round(yFac*(j+0.2)+yOff),clBlack,fsBorder);
         end;
-        3:
+        4:
         begin
-          pbMain.Canvas.Line(Round(xFac*(i-0.5)+xOff),Round(yFac*(j-0.5)+yOff),
-          Round(xFac*(i+0.5)+xOff),Round(yFac*(j+0.5)+yOff));
+          pbMain.Canvas.Line(Round(xFac*(i-0.5)+xOff),Round(yFac*(j-0.5)+yOff),Round(xFac*(i+0.5)+xOff),Round(yFac*(j+0.5)+yOff));
           pbMain.Canvas.FloodFill(Round(xFac*(i-0.2)+xOff),Round(yFac*(j+0.2)+yOff),clBlack,fsBorder);
         end;
       end;
