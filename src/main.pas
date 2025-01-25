@@ -19,6 +19,7 @@ type
     lblParameter2: TLabel;
     lblParameter: TLabel;
     MainMenu1: TMainMenu;
+    mniParket3: TMenuItem;
     mniParket2: TMenuItem;
     mniParket1: TMenuItem;
     mniStempel: TMenuItem;
@@ -47,6 +48,7 @@ type
     procedure mniKleedClick(Sender: TObject);
     procedure mniParket1Click(Sender: TObject);
     procedure mniParket2Click(Sender: TObject);
+    procedure mniParket3Click(Sender: TObject);
     procedure mniQuadrClick(Sender: TObject);
     procedure mniRuitClick(Sender: TObject);
     procedure mniRaamClick(Sender: TObject);
@@ -95,9 +97,9 @@ begin
   c := 1;
   m := 7;
   n := 400;
-  xOff := pbMain.Canvas.Width div 2 - 120;
-  yOff := pbMain.Canvas.Height div 2;
-  yfac := -pbMain.Canvas.Height/6;
+  xOff := pbMain.Width div 2 - 120;
+  yOff := pbMain.Height div 2;
+  yfac := -pbMain.Height/6;
   xFac := -yFac;
   for k := 0 to n do
   begin
@@ -203,10 +205,10 @@ begin
   frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniRand.Caption + ']';
   ClearPb;
   GroupBox1.Visible := True;
-  xOff := -100; //pbMain.Canvas.Width div 2;
-  yOff := pbMain.Canvas.Height div 2;
-  yFac := pbMain.Canvas.Height / 128;
-  xFac := pbMain.Canvas.Width / 240;
+  xOff := 0;
+  yOff := pbMain.Height div 2;
+  yFac := pbMain.Height / 128;
+  xFac := pbMain.Width / 240;
   lblParameter.Visible := True;
   seParameter.Visible := True;
   seParameter.MaxValue := 7;
@@ -335,8 +337,8 @@ begin
   frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniStempel.Caption + ']';
   ClearPb;
   GroupBox1.Visible := True;
-  xFac := pbMain.Canvas.Width/160;
-  yFac := pbMain.Canvas.Height/120;
+  xFac := pbMain.Width/160;
+  yFac := pbMain.Height/120;
   xOff := 100;
   yOff := 100;
   lblParameter.Visible := True;
@@ -528,9 +530,9 @@ begin
   frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniCycloide.Caption + ']';
   ClearPb;
   //pbMain.Canvas.TextOut(pbMain.Canvas.Width div 2, pbMain.Canvas.Height div 2, 'C');
-  xOff := pbMain.Canvas.Width div 2;
-  yOff := pbMain.Canvas.Height div 2;
-  yFac := pbMain.Canvas.Height/2.2;
+  xOff := pbMain.Width div 2;
+  yOff := pbMain.Height div 2;
+  yFac := pbMain.Height/2.2;
   xFac := yFac;
   m := 7;
   n := 180;
@@ -935,8 +937,8 @@ begin
   // Symmetrietype D(4)
   prog := 11;
   ClearPb;
-  xm := pbMain.Canvas.Width div 2 - 100;
-  ym := pbMain.Canvas.Height div 2;
+  xm := pbMain.Width div 2 - 100;
+  ym := pbMain.Height div 2;
   lblParameter.Visible := True;
   seParameter.Visible := True;
   seParameter.MaxValue := 50;
@@ -983,7 +985,7 @@ begin
   GroupBox1.Visible := True;
   xOff := 50;
   yOff := 50;
-  yFac := pbMain.Canvas.Height/16;
+  yFac := pbMain.Height/16;
   xFac := yFac;
   lblParameter.Visible := True;
   seParameter.Visible := True;
@@ -1056,7 +1058,7 @@ begin
   GroupBox1.Visible := True;
   xOff := 50;
   yOff := 50;
-  yFac := pbMain.Canvas.Height/16;
+  yFac := pbMain.Height/16;
   xFac := yFac;
   lblParameter.Visible := True;
   seParameter.Visible := True;
@@ -1123,6 +1125,143 @@ begin
     end;
   end;
   pbMain.Canvas.Brush.Color := clWhite;
+end;
+
+procedure TfrmMain.mniParket3Click(Sender: TObject);
+var
+  i , j, n, s, xOff, yOff: Integer;
+  a, b, c, u1, u2, u3, v1, v2, v3, x, y, x1, x2, y1, y2, z, xFac, yFac: Double;
+
+  procedure Gosub310;
+  begin
+    pbMain.Canvas.Line(Round(xFac*u1+xOff),Round(yFac*v1+yOff),Round(xFac*u2+xOff),Round(yFac*v2+yOff));
+    pbMain.Canvas.FloodFill(Round(xFac*u3+xOff),Round(yFac*v3+yOff),clBlack,fsBorder);
+    pbMain.Canvas.Line(Round(xFac*-u1+xOff),Round(yFac*v1+yOff),Round(xFac*-u2+xOff),Round(yFac*v2+yOff));
+    pbMain.Canvas.FloodFill(Round(xFac*-u3+xOff),Round(yFac*v3+yOff),clBlack,fsBorder);
+    pbMain.Canvas.Line(Round(xFac*u1+xOff),Round(yFac*-v1+yOff),Round(xFac*u2+xOff),Round(yFac*-v2+yOff));
+    pbMain.Canvas.FloodFill(Round(xFac*u3+xOff),Round(yFac*-v3+yOff),clBlack,fsBorder);
+    pbMain.Canvas.Line(Round(xFac*-u1+xOff),Round(yFac*-v1+yOff),Round(xFac*-u2+xOff),Round(yFac*-v2+yOff));
+    pbMain.Canvas.FloodFill(Round(xFac*-u3+xOff),Round(yFac*-v3+yOff),clBlack,fsBorder);
+  end;
+
+begin
+  prog := 15;
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniParket3.Caption + ']';
+  ClearPb;
+  GroupBox1.Visible := True;
+  lblParameter.Visible := True;
+  seParameter.Visible := True;
+  seParameter.MaxValue := 8;
+  seParameter.MinValue := 1;
+  lblParameter.Caption := 'Functie';
+  pbMain.Canvas.Brush.Color := clRed;
+  xOff := pbMain.Width div 2;
+  yOff := pbMain.Height div 2;
+  yFac := pbMain.Height/2;
+  xFac := yFac;
+  n := 9;
+  a := 1/n;
+  b := a/2;
+  c := a/4;
+  for i := -n to n do
+  begin
+    pbMain.Canvas.Line(Round(xFac*-a*n+xOff),Round(yFac*a*i+yOff),Round(xFac*a*n+xOff),Round(yFac*a*i+yOff));
+    pbMain.Canvas.Line(Round(xFac*a*i+xOff),Round(yFac*-a*n+yOff),Round(xFac*a*i+xOff),Round(yFac*a*n+yOff));
+  end;
+  for i := 1 to n do
+  begin
+    for j := 1 to i do
+    begin
+      x := a*i-b;
+      y := a*j-b;
+      x1 := x-b;
+      x2 := x+b;
+      y1 := y-b;
+      y2 := y+b;
+      case seParameter.Value of
+        1: z := 1+x+y;
+        2: z := 1+x-y;
+        3: z := 1-x+y;
+        4: z := 1-x-y;
+        5: z := 2+x+y;
+        6: z := 2+x-y;
+        7: z := 2-x+y;
+        8: z := 2-x-y;
+      end;
+      s := Trunc(200*z) mod 4 + 1;
+      if i = j then s := 1+2*(s div 3);
+      case s of
+        1:
+        begin
+          u1 := x1;
+          v1 := y2;
+          u2 := x2;
+          v2 := y1;
+          u3 := x-c;
+          v3 := y;
+          Gosub310;
+          u1 := y2;
+          v1 := x1;
+          u2 := y1;
+          v2 := x2;
+          u3 := y;
+          v3 := x-c;
+          Gosub310;
+        end;
+        2:
+        begin
+          u1 := x1;
+          v1 := y1;
+          u2 := x2;
+          v2 := y2;
+          u3 := x+c;
+          v3 := y;
+          Gosub310;
+          u1 := y1;
+          v1 := x1;
+          u2 := y2;
+          v2 := x2;
+          u3 := y;
+          v3 := x+c;
+          Gosub310;
+        end;
+        3:
+        begin
+          u1 := x1;
+          v1 := y2;
+          u2 := x2;
+          v2 := y1;
+          u3 := x+c;
+          v3 := y;
+          Gosub310;
+          u1 := y2;
+          v1 := x1;
+          u2 := y1;
+          v2 := x2;
+          u3 := y;
+          v3 := x+c;
+          Gosub310;
+        end;
+        4:
+        begin
+          u1 := x1;
+          v1 := y1;
+          u2 := x2;
+          v2 := y2;
+          u3 := x-c;
+          v3 := y;
+          Gosub310;
+          u1 := y1;
+          v1 := x1;
+          u2 := y2;
+          v2 := x2;
+          u3 := y;
+          v3 := x-c;
+          Gosub310;
+        end;
+      end;
+    end;
+  end;
 end;
 
 
@@ -1211,14 +1350,17 @@ begin
     12: mniStempelClick(Sender);
     13: mniParket1Click(Sender);
     14: mniParket2Click(Sender);
+    15: mniParket3Click(Sender);
   end;
 end;
 
 procedure TfrmMain.ClearPb;
 begin
   pbMain.Canvas.Clear;
-  //pbMain.Canvas.Brush.Color := clWhite;
-  //pbMain.Canvas.FillRect(0,0,pbMain.Canvas.Width,pbMain.Canvas.Height);
+  pbMain.Canvas.Brush.Color := clWhite;
+  pbMain.Canvas.Pen.Color := clblack;
+  pbMain.Canvas.Pen.Width := 1;
+  pbMain.Canvas.FillRect(0,0,pbMain.Width,pbMain.Height);
   //Application.ProcessMessages;
   GroupBox1.Visible := False;
   lblParameter.Visible := False;

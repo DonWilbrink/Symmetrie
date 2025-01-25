@@ -181,6 +181,10 @@ object frmMain: TfrmMain
         Caption = 'PARKET MET WIT-ZWARTE VIERKANTEN IN BLOKKEN VAN VIER'
         OnClick = mniParket2Click
       end
+      object mniParket3: TMenuItem
+        Caption = 'Vierkant parket bepaald door een wiskundige functie'
+        OnClick = mniParket3Click
+      end
     end
   end
 end
