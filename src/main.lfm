@@ -186,5 +186,12 @@ object frmMain: TfrmMain
         OnClick = mniParket3Click
       end
     end
+    object mniOverig: TMenuItem
+      Caption = 'Overige programma''s'
+      object mniMoskee: TMenuItem
+        Caption = 'Moskeeraam, Symmetrie P6M'
+        OnClick = mniMoskeeClick
+      end
+    end
   end
 end

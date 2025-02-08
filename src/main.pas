@@ -19,6 +19,8 @@ type
     lblParameter2: TLabel;
     lblParameter: TLabel;
     MainMenu1: TMainMenu;
+    mniMoskee: TMenuItem;
+    mniOverig: TMenuItem;
     mniParket3: TMenuItem;
     mniParket2: TMenuItem;
     mniParket1: TMenuItem;
@@ -46,6 +48,7 @@ type
     seParameter4: TSpinEdit;
     procedure mniHexaClick(Sender: TObject);
     procedure mniKleedClick(Sender: TObject);
+    procedure mniMoskeeClick(Sender: TObject);
     procedure mniParket1Click(Sender: TObject);
     procedure mniParket2Click(Sender: TObject);
     procedure mniParket3Click(Sender: TObject);
@@ -969,6 +972,64 @@ begin
       q4 := ym-5*i;
       z := (1-x*x)*(1-y*y);
       if Trunc(c*z) mod 2 = 0 then Gosub140;
+    end;
+  end;
+end;
+
+procedure TfrmMain.mniMoskeeClick(Sender: TObject);
+var
+  p1, x1, y1, xFac, yFac: Double;
+  x, y: Array[0..36] of Double;
+  b, i, j, k, n, n1, n2, xOff, yOff: Integer;
+
+begin
+  prog := 16;
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniMoskee.Caption + ']';
+  ClearPb;
+  pbMain.Canvas.Pen.Width := 2;
+  //pbMain.Canvas.TextOut(pbMain.Canvas.Width div 2, pbMain.Canvas.Height div 2, 'C');
+  xOff := 10;
+  yOff := 10;
+  yFac := pbMain.Height/60;
+  xFac := pbMain.Width/80;
+  p1 := pi/3;
+  x[1] := 1;
+  y[1] := 0;
+  x[2] := 1;
+  y[2] := 3;
+  x[3] := 4;
+  y[3] := 3;
+  for i := 1 to 5 do
+  begin
+    for n := 1 to 3 do
+    begin
+      x[3*i+n] := x[n]*Cos(p1*i)-y[n]*Sin(p1*i);
+      y[3*i+n] := x[n]*Sin(p1*i)+y[n]*Cos(p1*i);
+    end;
+  end;
+  for i := 0 to 5 do
+  begin
+    for n := 1 to 3 do
+    begin
+      x[3*(6+i)+n] := x[3*i+n];
+      y[3*(6+i)+n] := -y[3*i+n];
+    end;
+  end;
+  for n2 := 0 to 6 do
+  begin
+    if n2 mod 2 = 0 then b := 0 else b := 1;
+    for n1 := 0 to 7-b do
+    begin
+      for j := 0 to 11 do
+      begin
+        x1 := 12+4*b+8*n1;
+        y1 := 8+6.93*n2;
+        pbMain.Canvas.MoveTo(Round(xOff+xFac*(x1+x[3*j+1])),Round(yOff+yFac*(y1+y[3*j+1])));
+        for k := 2 to 3 do
+        begin
+          pbMain.Canvas.LineTo(Round(xOff+Xfac*(x1+x[3*j+k])),Round(yOff+yFac*(y1+y[3*j+k])));
+        end;
+      end;
     end;
   end;
 end;
