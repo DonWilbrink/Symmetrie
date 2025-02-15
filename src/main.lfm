@@ -112,7 +112,7 @@ object frmMain: TfrmMain
     end
   end
   object MainMenu1: TMainMenu
-    Left = 69
+    Left = 72
     Top = 81
     object mniHoofdstuk2: TMenuItem
       Caption = 'Hoofdstuk 2'
@@ -191,6 +191,10 @@ object frmMain: TfrmMain
       object mniMoskee: TMenuItem
         Caption = 'Moskeeraam, Symmetrie P6M'
         OnClick = mniMoskeeClick
+      end
+      object mniStert: TMenuItem
+        Caption = 'Stervormig tegelpatroon'
+        OnClick = mniStertClick
       end
     end
   end
