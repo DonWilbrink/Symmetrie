@@ -19,6 +19,8 @@ type
     lblParameter2: TLabel;
     lblParameter: TLabel;
     MainMenu1: TMainMenu;
+    mniKatten: TMenuItem;
+    mniCairo: TMenuItem;
     mniStert: TMenuItem;
     mniMoskee: TMenuItem;
     mniOverig: TMenuItem;
@@ -47,7 +49,9 @@ type
     seParameter2: TSpinEdit;
     seParameter3: TSpinEdit;
     seParameter4: TSpinEdit;
+    procedure mniCairoClick(Sender: TObject);
     procedure mniHexaClick(Sender: TObject);
+    procedure mniKattenClick(Sender: TObject);
     procedure mniKleedClick(Sender: TObject);
     procedure mniMoskeeClick(Sender: TObject);
     procedure mniParket1Click(Sender: TObject);
@@ -934,6 +938,102 @@ begin
         pbMain.Canvas.MoveTo(Round(xFac*(x1+x[j*m+1])+xOff),Round(yFac*(y1+y[j*m+1])+yOff));
         for k := 2 to m do
           pbMain.Canvas.LineTo(Round(xFac*(x1+x[j*m+k])+xOff),Round(yFac*(y1+y[j*m+k])+yOff));
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmMain.mniKattenClick(Sender: TObject);
+var
+  i, j, k, l, xOff, yOff: Integer;
+  xFac, yFac: Double;
+  x, y: Array [1..7,1..13] of Double;
+  m: Array [1..7] of Integer = (13,7,7,6,2,2,5);
+  DATA : array[1..84] of double = (
+         0,0,-1,4,0,8,0,12,3,9,9,9,12,12,12,8,11,4,12,0,9,-3,3,-3,0,0,
+         2,2,1.5,3,2.5,4,3.5,4,4,3.5,4,2,2,2,
+         8,2,8,3.5,8.5,4,9.5,4,10.5,3,10,2,8,2,
+         2,1,10,1,6,0.6,6,-0.5,6,0.6,2,1,3,4,3,2.5,9,4,9,2.5,
+         2.5,-0.5,4,-1.5,6,-1,8,-1.5,9.5,-0.5);
+begin
+  prog := 19;
+  ClearPb;
+  xOff := -50;
+  yOff := pbMain.Height + 50;
+  yFac := -pbMain.Height/81;
+  xFac := pbMain.Width/108;
+  K:=1;
+  FOR I:=1 TO 7 do
+  begin
+    FOR J:=1 TO M[I] do
+    begin
+      X[I,J]:=DATA[K];
+      inc(K);
+      Y[I,J]:=DATA[K];
+      inc(K);
+    end;
+  end;
+  with pbMain.Canvas do
+  begin
+    for i := 1 to 6 do
+    begin
+      for j := 1 to 8 do
+      begin
+        for k := 1 to 7 do
+        begin
+          MoveTo(Round(xOff+xFac*(12*j+x[k,1])),Round(yOff+yFac*(12*i+y[k,1])));
+          for l := 2 to m[k] do
+          begin
+            LineTo(Round(xOff+xFac*(12*j+x[k,l])),Round(yOff+yFac*(12*i+y[k,l])));
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmMain.mniCairoClick(Sender: TObject);
+var
+  a, c, n1, n2, s, u, v, xOff, yOff: Integer;
+  xFac, yFac: Double;
+begin
+  prog := 18;
+  ClearPb;
+  xOff := 0;
+  yOff := 0;
+  yFac := pbMain.Height/90;
+  xFac := pbMain.Width/120;
+  a := 3;
+  c := 10;
+  for n2 := 1 to 8 do
+  begin
+    for n1 := 0 to 10 do
+    begin
+      s := (n1+n2) mod 2;
+      u := c*n1;
+      v := c*n2;
+      with pbMain.Canvas do
+      begin
+        if s = 0 then
+        begin
+          MoveTo(Round(xOff+xFac*(u+a)),Round(yOff+yFac*v));
+          LineTo(Round(xOff+xFac*(u+c-a)),Round(yOff+yFac*(v-c)));
+          LineTo(Round(xOff+xFac*(u+c+a)),Round(yOff+yFac*(v-c)));
+          LineTo(Round(xOff+xFac*(u+2*c-a)),Round(yOff+yFac*v));
+          LineTo(Round(xOff+xFac*(u+c+a)),Round(yOff+yFac*(v+c)));
+          LineTo(Round(xOff+xFac*(u+c-a)),Round(yOff+yFac*(v+c)));
+          LineTo(Round(xOff+xFac*(u+a)),Round(yOff+yFac*v));
+         end
+         else
+         begin
+          MoveTo(Round(xOff+xFac*u),Round(yOff+yFac*(v-a)));
+          LineTo(Round(xOff+xFac*(u+c)),Round(yOff+yFac*(v-c+a)));
+          LineTo(Round(xOff+xFac*(u+2*c)),Round(yOff+yFac*(v-a)));
+          LineTo(Round(xOff+xFac*(u+2*c)),Round(yOff+yFac*(v+a)));
+          LineTo(Round(xOff+xFac*(u+c)),Round(yOff+yFac*(v+c-a)));
+          LineTo(Round(xOff+xFac*u),Round(yOff+yFac*(v+a)));
+          LineTo(Round(xOff+xFac*u),Round(yOff+yFac*(v-a)));
+        end;
       end;
     end;
   end;

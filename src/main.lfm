@@ -113,7 +113,7 @@ object frmMain: TfrmMain
   end
   object MainMenu1: TMainMenu
     Left = 72
-    Top = 81
+    Top = 80
     object mniHoofdstuk2: TMenuItem
       Caption = 'Hoofdstuk 2'
       object mniBloem: TMenuItem
@@ -195,6 +195,14 @@ object frmMain: TfrmMain
       object mniStert: TMenuItem
         Caption = 'Stervormig tegelpatroon'
         OnClick = mniStertClick
+      end
+      object mniCairo: TMenuItem
+        Caption = 'Symmetrisch patroon van vijfhoeken'
+        OnClick = mniCairoClick
+      end
+      object mniKatten: TMenuItem
+        Caption = 'Schaakbordpatroon met katten'
+        OnClick = mniKattenClick
       end
     end
   end
