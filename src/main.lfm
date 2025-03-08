@@ -204,6 +204,10 @@ object frmMain: TfrmMain
         Caption = 'Schaakbordpatroon met katten'
         OnClick = mniKattenClick
       end
+      object mniVissen: TMenuItem
+        Caption = 'Vissenpatroon op rechthoekig rooster, type PMG'
+        OnClick = mniVissenClick
+      end
     end
   end
 end

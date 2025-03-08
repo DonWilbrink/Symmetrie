@@ -19,6 +19,7 @@ type
     lblParameter2: TLabel;
     lblParameter: TLabel;
     MainMenu1: TMainMenu;
+    mniVissen: TMenuItem;
     mniKatten: TMenuItem;
     mniCairo: TMenuItem;
     mniStert: TMenuItem;
@@ -67,6 +68,7 @@ type
     procedure mniStempelClick(Sender: TObject);
     procedure mniStertClick(Sender: TObject);
     procedure mniTriClick(Sender: TObject);
+    procedure mniVissenClick(Sender: TObject);
     procedure mniWervelClick(Sender: TObject);
     procedure seParameter2Change(Sender: TObject);
     procedure seParameter3Change(Sender: TObject);
@@ -560,6 +562,53 @@ begin
         pbMain.Canvas.MoveTo(Round(xOff+xFac*(x1+x[j*m+1])),Round(yOff+yFac*(y1+y[j*m+1])));
         for k := 2 to m do
           pbMain.Canvas.LineTo(Round(xOff+xFac*(x1+x[j*m+k])),Round(yOff+yFac*(y1+y[j*m+k])));
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmMain.mniVissenClick(Sender: TObject);
+var
+  j, k, m, n, n1, n2, x1, y1, xOff, yOff: Integer;
+  xFac, yFac: Double;
+  x, y: Array [1..20] of Double;
+begin
+  prog := 20;
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniVissen.Caption + ']';
+  ClearPb;
+  xOff := 0;
+  yOff := 0;
+  yFac := pbMain.Height/60;
+  xFac := pbMain.Width/80;
+  m := 5;
+  x[1] := 0; y[1] := 0;
+  x[2] := 1; y[2] := 1;
+  x[3] := 4; y[3] := 0;
+  x[4] := 2.5; y[4] := 1;
+  x[5] := 2.5; y[5] := 1.5;
+  for n := 1 to m do
+  begin
+    x[m+n] := 8-x[n];
+    y[m+n] := -y[n];
+    x[2*m+n] := x[n];
+    y[2*m+n] := 3-y[n];
+    x[3*m+n] := 8-x[n];
+    y[3*m+n] := 3+y[n];
+  end;
+  for n2 := 0 to 6 do
+  begin
+    for n1 := 0 to 7 do
+    begin
+      x1 := 8+8*n1;
+      y1 := 12+6*n2;
+      for j := 0 to 3 do
+      begin
+        with pbMain.Canvas do
+        begin
+          Moveto(Round(xOff+xFac*(x1+x[j*m+1])),Round(yOff+yFac*(y1+y[j*m+1])));
+          for k := 2 to m do
+            LineTo(Round(xOff+xFac*(x1+x[j*m+k])),Round(yOff+yFac*(y1+y[j*m+k])));
+        end;
       end;
     end;
   end;
