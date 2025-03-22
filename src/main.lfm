@@ -112,7 +112,7 @@ object frmMain: TfrmMain
     end
   end
   object MainMenu1: TMainMenu
-    Left = 72
+    Left = 80
     Top = 80
     object mniHoofdstuk2: TMenuItem
       Caption = 'Hoofdstuk 2'
@@ -207,6 +207,14 @@ object frmMain: TfrmMain
       object mniVissen: TMenuItem
         Caption = 'Vissenpatroon op rechthoekig rooster, type PMG'
         OnClick = mniVissenClick
+      end
+      object mniZeepaard: TMenuItem
+        Caption = 'Zeepaardjes patroon op parallelogramrooster'
+        OnClick = mniZeepaardClick
+      end
+      object mniPolyeder: TMenuItem
+        Caption = 'De vijf regelmatige veelvlakken in orthogonale projectie'
+        OnClick = mniPolyederClick
       end
     end
   end

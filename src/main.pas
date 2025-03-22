@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Menus, ExtCtrls,
-  StdCtrls, Spin;
+  StdCtrls, Spin, Math;
 
 type
 
@@ -19,6 +19,8 @@ type
     lblParameter2: TLabel;
     lblParameter: TLabel;
     MainMenu1: TMainMenu;
+    mniPolyeder: TMenuItem;
+    mniZeepaard: TMenuItem;
     mniVissen: TMenuItem;
     mniKatten: TMenuItem;
     mniCairo: TMenuItem;
@@ -58,6 +60,7 @@ type
     procedure mniParket1Click(Sender: TObject);
     procedure mniParket2Click(Sender: TObject);
     procedure mniParket3Click(Sender: TObject);
+    procedure mniPolyederClick(Sender: TObject);
     procedure mniQuadrClick(Sender: TObject);
     procedure mniRuitClick(Sender: TObject);
     procedure mniRaamClick(Sender: TObject);
@@ -70,6 +73,7 @@ type
     procedure mniTriClick(Sender: TObject);
     procedure mniVissenClick(Sender: TObject);
     procedure mniWervelClick(Sender: TObject);
+    procedure mniZeepaardClick(Sender: TObject);
     procedure seParameter2Change(Sender: TObject);
     procedure seParameter3Change(Sender: TObject);
     procedure seParameter4Change(Sender: TObject);
@@ -1511,6 +1515,92 @@ begin
   end;
 end;
 
+procedure TfrmMain.mniPolyederClick(Sender: TObject);
+var
+  i, j, k, l, s1, xOff, yOff: Integer;
+  s, t, xFac, yFac: Double;
+  n: Array of Integer;
+  x, y, z: Array of Array of Double;
+  u, v: Array [1..20] of Double;
+  DATA : array[0..154] of double = (
+         4,6,8,12,20,
+         -2.83,0,-1,1.41,2.45,-1,1.41,-2.45,-1,0,0,3,
+         1,0,0,-1,0,0,0,1,0,0,-1,0,0,0,1,0,0,-1,
+         0,0,0,1,0,0,0,1,0,0,0,1,1,1,1,0,1,1,1,0,1,1,1,0,
+         0,1,0.618,0,1,-0.618,1,0.618,0,1,-0.618,0,0.618,0,1,-0.618,0,1,
+         0,-1,-0.618,0,-1,0.618,-1,-0.618,0,-1,0.618,0,-0.618,0,-1,0.618,0,-1,
+         1,1,1,-1,1,1,1,-1,1,1,1,-1,1,-1,-1,-1,1,-1,-1,-1,1,-1,-1,-1,
+         0,0.618,1.618,0,-0.618,1.618,0,0.618,-1.618,0,-0.618,-1.618,
+         1.618,0,0.618,-1.618,0,0.618,1.618,0,-0.618,-1.618,0,-0.618,
+         0.618,1.618,0,-0.618,1.618,0,0.618,-1.618,0,-0.618,-1.618,0);
+begin
+  prog := 22;
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniPolyeder.Caption + ']';
+  ClearPb;
+  GroupBox1.Visible := True;
+  lblParameter.Visible := True;
+  seParameter.Visible := True;
+  seParameter.MaxValue := 5;
+  seParameter.MinValue := 1;
+  lblParameter.Caption := 'Type Polyeder';
+  xOff := pbMain.Canvas.Width div 2 -100;
+  yOff := pbMain.Canvas.Height div 2;
+  SetLength(n,5);
+  for i:=0 to 4 do
+  begin
+    N[i]:=Round(DATA[i]);
+    SetLength(x,5,n[i]);
+    SetLength(y,5,n[i]);
+    SetLength(z,5,n[i]);
+  end;
+  K:=5;
+  FOR I:=0 TO 4 do
+  begin
+    FOR J:=0 TO N[I]-1 do
+    begin
+      X[I,J]:=DATA[K];
+      Y[I,J]:=DATA[K+1];
+      Z[I,J]:=DATA[K+2];
+      Inc(K,3);
+    end; // for J
+  end;
+  s1 := seParameter.Value;
+  case s1 of
+    1:
+    begin
+      yFac := pbMain.Canvas.Height/6;
+      xFac := yFac;
+      t := 25;
+    end;
+    2:
+    begin
+      yFac := pbMain.Canvas.Height/3;
+      xFac := yFac;
+      t := 2.5;
+    end;
+    3, 4, 5:
+    begin
+      yFac := pbMain.Canvas.Height/4;
+      xFac := yFac;
+      t := 1.6;
+    end;
+  end;
+  for k := 1 to n[s1-1] do
+  begin
+    u[k] := -0.6*x[s1-1,k-1]+0.8*y[s1-1,k-1];
+    v[k] := -0.308*x[s1-1,k-1]-0.231*y[s1-1,k-1]+0.923*z[s1-1,k-1];
+  end;
+  // pbMain.Canvas.EllipseC(pbMain.Width div 2,pbMain.Height div 2, 10,10);
+  for k := 1 to n[s1-1]-1 do
+  begin
+    for l := k+1 to n[s1-1] do
+    begin
+      s := Power(x[s1-1,k-1]-x[s1-1,l-1],2)+Power(y[s1-1,k-1]-y[s1-1,l-1],2)+Power(z[s1-1,k-1]-z[s1-1,l-1],2);
+      if s < t then pbMain.Canvas.Line(Round(xOff+xFac*u[k]),Round(yOff+yFac*v[k]),Round(xOff+xFac*u[l]),Round(yOff+yFac*v[l]));
+    end;
+  end;
+end;
+
 
 procedure TfrmMain.mniWervelClick(Sender: TObject);
 var
@@ -1548,6 +1638,38 @@ begin
       z := x[l];
       x[l] := (x[l]*Cos(a)-y[l]*Sin(a))*c;
       y[l] := (z*Sin(a)+y[l]*Cos(a))*c;
+    end;
+  end;
+end;
+
+procedure TfrmMain.mniZeepaardClick(Sender: TObject);
+var
+  k, m, n1, n2, u, v, xOff, yOff: Integer;
+  Xfac, yFac: Double;
+  x, y: Array of Integer;
+begin
+  prog := 21;
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniZeepaard.Caption + ']';
+  ClearPb;
+  xOff := 0;
+  yOff := 0;
+  yFac := pbMain.Height/45;
+  xFac := pbMain.Width/60;
+  m := 38;
+  x := [0,4,4,7,7,6,6,3,3,0,0,1,1,-2,-2,0,0,2,2,-1,-1,0,0,3,3,6,6,5,5,8,8,6,6,4,4,3,3,2,2];
+  y := [0,3,2,2,1,1,0,0,1,1,4,4,5,5,6,6,8,8,9,9,10,10,11,11,10,10,7,7,6,6,5,5,3,3,4,4,7,7,8];
+  for n1 := 0 to 8 do
+  begin
+    for n2 := 0 to 6 do
+    begin
+      u := 3+6*n1;
+      v := 10*n2-3*n1;
+      with pbMain.Canvas do
+      begin
+        MoveTo(Round(xOff+xFac*(u+x[1])),Round(yOff+yFac*(v+y[1])));
+        for k := 2 to m do
+          LineTo(Round(xOff+xFac*(u+x[k])),Round(yOff+yFac*(v+y[k])));
+      end;
     end;
   end;
 end;
@@ -1598,6 +1720,7 @@ begin
     13: mniParket1Click(Sender);
     14: mniParket2Click(Sender);
     15: mniParket3Click(Sender);
+    22: mniPolyederClick(Sender);
   end;
 end;
 
