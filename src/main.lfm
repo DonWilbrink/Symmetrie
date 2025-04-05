@@ -67,7 +67,7 @@ object frmMain: TfrmMain
         Top = 128
         Width = 62
         TabOrder = 1
-        Value = 12
+        Value = 1
         OnChange = seParameter2Change
       end
       object lblParameter2: TLabel
@@ -215,6 +215,14 @@ object frmMain: TfrmMain
       object mniPolyeder: TMenuItem
         Caption = 'De vijf regelmatige veelvlakken in orthogonale projectie'
         OnClick = mniPolyederClick
+      end
+      object mniEscher: TMenuItem
+        Caption = 'Stempelafdrukken a la Escher'
+        OnClick = mniEscherClick
+      end
+      object mniQuadrp: TMenuItem
+        Caption = 'Paarden patroon op quaddratisch rooster'
+        OnClick = mniQuadrpClick
       end
     end
   end

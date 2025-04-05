@@ -19,6 +19,8 @@ type
     lblParameter2: TLabel;
     lblParameter: TLabel;
     MainMenu1: TMainMenu;
+    mniQuadrp: TMenuItem;
+    mniEscher: TMenuItem;
     mniPolyeder: TMenuItem;
     mniZeepaard: TMenuItem;
     mniVissen: TMenuItem;
@@ -53,6 +55,7 @@ type
     seParameter3: TSpinEdit;
     seParameter4: TSpinEdit;
     procedure mniCairoClick(Sender: TObject);
+    procedure mniEscherClick(Sender: TObject);
     procedure mniHexaClick(Sender: TObject);
     procedure mniKattenClick(Sender: TObject);
     procedure mniKleedClick(Sender: TObject);
@@ -62,6 +65,7 @@ type
     procedure mniParket3Click(Sender: TObject);
     procedure mniPolyederClick(Sender: TObject);
     procedure mniQuadrClick(Sender: TObject);
+    procedure mniQuadrpClick(Sender: TObject);
     procedure mniRuitClick(Sender: TObject);
     procedure mniRaamClick(Sender: TObject);
     procedure mniCycloideClick(Sender: TObject);
@@ -921,6 +925,60 @@ begin
   end;
 end;
 
+procedure TfrmMain.mniQuadrpClick(Sender: TObject);
+var
+  Data: Array of Double = (
+                         0,0,0,-1,1,-0.5,2.5,2.5,3.3,-0.8,4.5,0.4,3.5,0,3,
+                         -1.5,4,-1.3,5,0.5,4.8,2,10.5,0,10,0.3,10.5,-0.3,11,
+                         0,12,3,12.5,6,11.5,7,10,5,6,6,5.5,7,7.5,10,10);
+  x, y: Array [1..22] of Double;
+  k, m, n, n1, n2, s, u, v, x1, y1, xOff, yOff: Integer;
+  xFac, yFac: Double;
+begin
+  prog := 24;
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniQuadrp.Caption + ']';
+  ClearPb;
+  xFac := pbMain.Width/92;
+  yFac := pbMain.Height/72;
+  xOff := 0;
+  yOff := 0;
+  m := 22;
+  for n := 1 to m do
+  begin
+    x[n]:=-Data[2*n-1];  // X[1]=D[1] X[2]=D[3] X[3]=D[5]
+    y[n]:=-Data[2*n  ];  // Y[1]=D[2] Y[2]=D[4] Y[3]=D[6]
+  end;
+  with pbMain.Canvas do
+  begin
+    Brush.Color := clRed;
+    for n2 := 0 to 9 do
+    begin
+      for n1 := 0 to 10 do
+      begin
+        x1 := -5+10*n1;
+        y1 := -15+10*n2;
+        MoveTo(Round(xOff+xFac*(x1+x[1])),Round(yOff+yFac*(y1+y[1])));
+        for k := 2 to m do
+          LineTo(Round(xOff+xFac*(x1+x[k])),Round(yOff+yFac*(y1+y[k])));
+      end;
+    end;
+    for n2 := 0 to 8 do
+    begin
+      for n1 := 0 to 9 do
+      begin
+        u := 10*n1;
+        v := -10+10*n2;
+        s := (n1+n2) mod 2;
+        if s = 1 then
+        begin
+          //EllipseC(Round(xOff+xFac*u),Round(yOff+yFac*v),2,2);
+          FloodFill(Round(xOff+xFac*u),Round(yOff+yFac*v),clBlack,fsBorder);
+        end;
+      end;
+    end;
+  end;
+end;
+
 procedure TfrmMain.mniHexaClick(Sender: TObject);
 var
   b, f, i, j, k, m, n, n1, n2, s, xOff, yOff: Integer;
@@ -1010,6 +1068,7 @@ var
          2.5,-0.5,4,-1.5,6,-1,8,-1.5,9.5,-0.5);
 begin
   prog := 19;
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniKatten.Caption + ']';
   ClearPb;
   xOff := -50;
   yOff := pbMain.Height + 50;
@@ -1051,6 +1110,7 @@ var
   xFac, yFac: Double;
 begin
   prog := 18;
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniCairo.Caption + ']';
   ClearPb;
   xOff := 0;
   yOff := 0;
@@ -1090,6 +1150,106 @@ begin
       end;
     end;
   end;
+end;
+
+procedure TfrmMain.mniEscherClick(Sender: TObject);
+var
+  x, y: Array [1..4,1..10] of Double;
+  Data: Array of Double = (
+              -3,1,-1,-3,-1,3,1,-3,
+              -3,-1,-1.5,-0.5,0.5,1.5,1,3,3,1,2,1,1.5,0.5,1.5,-0.5,2,-1,3,-1);
+  m: Array of Integer = (0,2,2,10);
+  s: Array [0..3] of Integer;
+  i, j, k, l, mm, p, q, ss, w, xx, yy, xOff, yOff: Integer;
+  xFac, yFac: Double;
+begin
+  prog := 23;
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniEscher.Caption + ']';
+  ClearPb;
+  GroupBox1.Visible := True;
+  lblParameter.Visible := True;
+  seParameter.Visible := True;
+  seParameter.MaxValue := 8;
+  seParameter.MinValue := 1;
+  lblParameter.Caption := 'Positie stempel 1';
+  lblParameter2.Visible := True;
+  seParameter2.Visible := True;
+  seParameter2.MaxValue := 8;
+  seParameter2.MinValue := 1;
+  lblParameter2.Caption := 'Positie stempel 2';
+  lblParameter3.Visible := True;
+  seParameter3.Visible := True;
+  seParameter3.MaxValue := 8;
+  seParameter3.MinValue := 1;
+  lblParameter3.Caption := 'Positie stempel 3';
+  lblParameter4.Visible := True;
+  seParameter4.Visible := True;
+  seParameter4.MaxValue := 8;
+  seParameter4.MinValue := 1;
+  lblParameter4.Caption := 'Positie stempel 4';
+  xOff := 55;
+  yOff := pbMain.Height - 200;
+  yFac := -pbMain.Height/80;
+  xFac := pbMain.Width/100;
+  mm := 3;
+  k := 0;
+  for i := 1 to mm do
+  begin
+    for j := 1 to m[i] do
+    begin
+      x[i,j] := Data[k];
+      Inc(k);
+      y[i,j] := Data[k];
+      Inc(k);
+    end;
+  end;
+  with pbMain.Canvas do
+  begin
+    s[0] := seParameter.Value;
+    s[1] := seParameter2.Value;
+    s[2] := seParameter3.Value;
+    s[3] := seParameter4.Value;
+    MoveTo(Round(xOff+xFac*-3),Round(yOff+yFac*-3));
+    LineTo(Round(xOff+xFac*-3),Round(yOff+yFac*51));
+    LineTo(Round(xOff+xFac*69),Round(yOff+yFac*51));
+    LineTo(Round(xOff+xFac*69),Round(yOff+yFac*-3));
+    LineTo(Round(xOff+xFac*-3),Round(yOff+yFac*-3));
+    for j := 0 to 8 do
+    begin
+      for i := 0 to 11 do
+      begin
+        xx := 6*i;
+        yy := 6*j;
+        if j mod 2 = 0 then w := 0 else w := 2;
+        if i mod 2 = 1 then w := w+1;
+        ss := s[w];
+        if (ss = 1) or (ss = 2) or (ss = 5) or (ss = 6) then p := 1 else p := -1;
+        if (ss = 1) or (ss = 4) or (ss = 6) or (ss = 7) then q := 1 else q := -1;
+        if ss mod 2 = 1 then
+        begin
+          for k := 1 to mm do
+          begin
+            MoveTo(Round(xOff+xFac*(xx+p*x[k,1])),Round(yOff+yFac*(yy+q*y[k,1])));
+            for l := 2 to m[k] do
+            begin
+              LineTo(Round(xOff+xFac*(xx+p*x[k,l])),Round(yOff+yFac*(yy+q*y[k,l])));
+            end; // for l
+          end; // for k
+        end // if
+        else
+        begin
+          for k := 1 to mm do
+          begin
+            MoveTo(Round(xOff+xFac*(xx+p*y[k,1])),Round(yOff+yFac*(yy+q*x[k,1])));
+            for l := 2 to m[k] do
+            begin
+              LineTo(Round(xOff+xFac*(xx+p*y[k,l])),Round(yOff+yFac*(yy+q*x[k,l])));
+            end; // for l
+          end; // for k
+        end; // else
+      end; // for i
+    end; // for j
+  end; // with
 end;
 
 procedure TfrmMain.mniKleedClick(Sender: TObject);
@@ -1688,6 +1848,7 @@ begin
     12: mniStempelClick(Sender);
     13: mniParket1Click(Sender);
     14: mniParket2Click(Sender);
+    23: mniEscherClick(Sender);
   end;
 end;
 
@@ -1695,6 +1856,7 @@ procedure TfrmMain.seParameter3Change(Sender: TObject);
 begin
   case prog of
     14: mniParket2Click(Sender);
+    23: mniEscherClick(Sender);
   end;
 end;
 
@@ -1702,6 +1864,7 @@ procedure TfrmMain.seParameter4Change(Sender: TObject);
 begin
    case prog of
     14: mniParket2Click(Sender);
+    23: mniEscherClick(Sender);
   end;
 end;
 
@@ -1721,6 +1884,7 @@ begin
     14: mniParket2Click(Sender);
     15: mniParket3Click(Sender);
     22: mniPolyederClick(Sender);
+    23: mniEscherClick(Sender);
   end;
 end;
 
