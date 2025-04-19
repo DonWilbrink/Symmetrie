@@ -162,6 +162,10 @@ object frmMain: TfrmMain
         Caption = 'Symmetrisch patroon op hexagonaal rooster'
         OnClick = mniHexaClick
       end
+      object mniHexah: TMenuItem
+        Caption = 'Symmetrisch patroon op hexagonaal rooster in perspectief'
+        OnClick = mniHexahClick
+      end
     end
     object mniHoofdstuk7: TMenuItem
       Caption = 'Hoofdstuk 7'
@@ -223,6 +227,10 @@ object frmMain: TfrmMain
       object mniQuadrp: TMenuItem
         Caption = 'Paarden patroon op quaddratisch rooster'
         OnClick = mniQuadrpClick
+      end
+      object mniTrip: TMenuItem
+        Caption = 'Paarden patroon op hexagonaal rooster volgens Nakamura'
+        OnClick = mniTripClick
       end
     end
   end

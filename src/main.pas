@@ -19,6 +19,8 @@ type
     lblParameter2: TLabel;
     lblParameter: TLabel;
     MainMenu1: TMainMenu;
+    mniHexah: TMenuItem;
+    mniTrip: TMenuItem;
     mniQuadrp: TMenuItem;
     mniEscher: TMenuItem;
     mniPolyeder: TMenuItem;
@@ -57,6 +59,7 @@ type
     procedure mniCairoClick(Sender: TObject);
     procedure mniEscherClick(Sender: TObject);
     procedure mniHexaClick(Sender: TObject);
+    procedure mniHexahClick(Sender: TObject);
     procedure mniKattenClick(Sender: TObject);
     procedure mniKleedClick(Sender: TObject);
     procedure mniMoskeeClick(Sender: TObject);
@@ -75,6 +78,7 @@ type
     procedure mniStempelClick(Sender: TObject);
     procedure mniStertClick(Sender: TObject);
     procedure mniTriClick(Sender: TObject);
+    procedure mniTripClick(Sender: TObject);
     procedure mniVissenClick(Sender: TObject);
     procedure mniWervelClick(Sender: TObject);
     procedure mniZeepaardClick(Sender: TObject);
@@ -575,6 +579,87 @@ begin
   end;
 end;
 
+procedure TfrmMain.mniTripClick(Sender: TObject);
+var
+  Data: Array of Double = (
+                         0,16,0,15.77,0.3,15.32,-0.3,14.87,0.3,14.42,-0.3,
+                         13.97,0.3,13.52,-0.3,13.07,0.3,12.62,-0.3,12.17,0.3,
+                         12.17,0.3,11.95,0,10,4.6,
+                         11.6,5.4,12.2,4,13.7,2.1,14.7,3,13.5,4.5,
+                         12.7,6.5,10.7,7.5,13.5,10,14.7,9.5,14.1,8.7,
+                         13.7,8.8,13,7.7,14,7.2,16,9.2,
+                         8,4.62,7.5,5.8,8,6.2,10,4.6);
+  x, y: Array [1..6,1..27] of Double;
+  b, j, k, m1, m2, n, n1, n2, xOff, yOff: Integer;
+  x1, y1, xFac, yFac: Double;
+
+begin
+  prog := 25;
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniTrip.Caption + ']';
+  ClearPb;
+  xOff := 0;
+  yOff := 0;
+  yFac := pbMain.Height/60;
+  xFac := pbMain.Width/80;
+  m1 := 27;
+  m2 := 4;
+  k := 1;
+  for n := 1 to m1 do
+  begin
+    x[1,n] := Data[k];
+    y[1,n] := Data[k+1];
+    Inc(k,2);
+  end;
+  for n := 1 to m2 do
+  begin
+    x[4,n] := Data[k];
+    y[4,n] := Data[k+1];
+    Inc(k,2);
+  end;
+  for n := 1 to m1 do
+  begin
+    x[2,n] := -0.5*x[1,n]+0.866*y[1,n]+16;
+    y[2,n] := -0.866*x[1,n]-0.5*y[1,n]+27.71;
+    x[3,n] := -0.5*x[1,n]-0.866*y[1,n]+16;
+    y[3,n] := 0.866*x[1,n]-0.5*y[1,n];
+  end;
+  for n := 1 to m2 do
+  begin
+    x[5,n] := -0.5*x[4,n]+0.866*y[4,n]+16;
+    y[5,n] := -0.866*x[4,n]-0.5*y[4,n]+27.71;
+    x[6,n] := -0.5*x[4,n]-0.866*y[4,n]+16;
+    y[6,n] := 0.866*x[4,n]-0.5*y[4,n];
+  end;
+  for n2 := -1 to 5 do
+  begin
+    if n2 mod 2 = 0 then b := 0 else b := 1;
+    for n1 := -1 to 5-b do
+    begin
+      x1 := 4+8*b+16*n1;
+      y1 := 13.86*n2;
+      with pbMain.Canvas do
+      begin
+        for j := 1 to 3 do
+        begin
+          MoveTo(Round(xOff+xFac*(x1+x[j,1])),Round(yOff+yFac*(y1+y[j,1])));
+          for k := 2 to m1 do
+          begin
+            LineTo(Round(xOff+xFac*(x1+x[j,k])),Round(yOff+yFac*(y1+y[j,k])));
+          end;
+        end;
+        for j := 4 to 6 do
+        begin
+          MoveTo(Round(xOff+xFac*(x1+x[j,1])),Round(yOff+yFac*(y1+y[j,1])));
+          for k := 2 to m2 do
+          begin
+            LineTo(Round(xOff+xFac*(x1+x[j,k])),Round(yOff+yFac*(y1+y[j,k])));
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
+
 procedure TfrmMain.mniVissenClick(Sender: TObject);
 var
   j, k, m, n, n1, n2, x1, y1, xOff, yOff: Integer;
@@ -630,12 +715,17 @@ begin
   prog := 3;
   frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniCycloide.Caption + ']';
   ClearPb;
+  GroupBox1.Visible := True;
+  lblParameter.Visible := True;
+  seParameter.Visible := True;
+  seParameter.MaxValue := 55;
+  seParameter.MinValue := -55;
   //pbMain.Canvas.TextOut(pbMain.Canvas.Width div 2, pbMain.Canvas.Height div 2, 'C');
   xOff := pbMain.Width div 2;
   yOff := pbMain.Height div 2;
   yFac := pbMain.Height/2.2;
   xFac := yFac;
-  m := 7;
+  m := seParameter.Value;
   n := 180;
   for k := 1 to n do
   begin
@@ -1049,6 +1139,71 @@ begin
         pbMain.Canvas.MoveTo(Round(xFac*(x1+x[j*m+1])+xOff),Round(yFac*(y1+y[j*m+1])+yOff));
         for k := 2 to m do
           pbMain.Canvas.LineTo(Round(xFac*(x1+x[j*m+k])+xOff),Round(yFac*(y1+y[j*m+k])+yOff));
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmMain.mniHexahClick(Sender: TObject);
+var
+  a1, a2, a3, b1, b2, b3, c1, c2, c3, c4, p3, u, v, xx, x1, xFac, yy, y1, yFac: Double;
+  b, i, j, k, m, n, n1, n2, xOff, yOff: Integer;
+  x, y: Array [1..18] of Double;
+  Data: Array [1..6] of Double = (0,0,3,1.732,4,0);
+
+  procedure GoSub260;
+  begin
+    c4 := c1*u+c2*v+c3;
+    xx := (a1*u+a2*v+a3)/c4;
+    yy := (b1*u+b2*v+b3)/c4;
+  end;
+
+begin
+  prog := 26;
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniHexah.Caption + ']';
+  ClearPb;
+  xOff := 0;
+  yOff := pbMain.Height;
+  yFac := -pbMain.Height/21;
+  xFac := pbMain.Width/21;
+  p3 := pi/3;
+  a1 := 1; a2 := 0.2; a3 := 0;
+  b1 := 0.2; b2 := 1; b3 := 0;
+  c1 := 0.02; c2 := 0.025; c3 := 1;
+  m := 3;
+  for n := 1 to m do
+  begin
+    x[n] := Data[2*n-1];
+    y[n] := Data[2*n];
+  end;
+  for i := 1 to 5 do
+  begin
+    for n := 1 to m do
+    begin
+      x[i*m+n] := x[n]*Cos(p3*i)-y[n]*Sin(p3*i);
+      y[i*m+n] := x[n]*Sin(p3*i)+y[n]*Cos(p3*i);
+    end;
+  end;
+  for n2 := 0 to 12 do
+  begin
+    if n2 mod 2 = 0 then b := 0 else b := 1;
+    for n1 := -1 to 15-b do
+    begin
+      for j := 0 to 5 do
+      begin
+        x1 := 4*b+8*n1;
+        y1 := 6.93*n2;
+        u := x1+x[j*m+1];
+        v := y1+y[j*m+1];
+        Gosub260;
+        pbMain.Canvas.MoveTo(Round(xOff+xFac*xx),Round(yOff+yFac*yy));
+        for k := 2 to m do
+        begin
+          u := x1+x[j*m+k];
+          v := y1+y[j*m+k];
+          Gosub260;
+          pbMain.Canvas.LineTo(Round(xOff+xFac*xx),Round(yOff+yFac*yy));
+        end;
       end;
     end;
   end;
@@ -1871,6 +2026,7 @@ end;
 procedure TfrmMain.seParameterChange(Sender: TObject);
 begin
   case prog of
+    3: mniCycloideClick(Sender);
     4: mniRandClick(Sender);
     5: mniParalClick(Sender);
     6: mniRaamClick(Sender);
