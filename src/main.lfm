@@ -154,6 +154,14 @@ object frmMain: TfrmMain
         Caption = 'Symmetrisch patroon op quadratisch rooster'
         OnClick = mniQuadrClick
       end
+      object mniQuadrp: TMenuItem
+        Caption = 'Paarden patroon op quaddratisch rooster'
+        OnClick = mniQuadrpClick
+      end
+      object mniQuadrt: TMenuItem
+        Caption = 'Symmetrisch tegelpatroon op quadratisch rooster type P4G'
+        OnClick = mniQuadrtClick
+      end
       object mniTri: TMenuItem
         Caption = 'Variabel patroon op hexagonaal rooster'
         OnClick = mniTriClick
@@ -223,10 +231,6 @@ object frmMain: TfrmMain
       object mniEscher: TMenuItem
         Caption = 'Stempelafdrukken a la Escher'
         OnClick = mniEscherClick
-      end
-      object mniQuadrp: TMenuItem
-        Caption = 'Paarden patroon op quaddratisch rooster'
-        OnClick = mniQuadrpClick
       end
       object mniTrip: TMenuItem
         Caption = 'Paarden patroon op hexagonaal rooster volgens Nakamura'

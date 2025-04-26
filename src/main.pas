@@ -19,6 +19,7 @@ type
     lblParameter2: TLabel;
     lblParameter: TLabel;
     MainMenu1: TMainMenu;
+    mniQuadrt: TMenuItem;
     mniHexah: TMenuItem;
     mniTrip: TMenuItem;
     mniQuadrp: TMenuItem;
@@ -69,6 +70,7 @@ type
     procedure mniPolyederClick(Sender: TObject);
     procedure mniQuadrClick(Sender: TObject);
     procedure mniQuadrpClick(Sender: TObject);
+    procedure mniQuadrtClick(Sender: TObject);
     procedure mniRuitClick(Sender: TObject);
     procedure mniRaamClick(Sender: TObject);
     procedure mniCycloideClick(Sender: TObject);
@@ -1069,6 +1071,63 @@ begin
   end;
 end;
 
+procedure TfrmMain.mniQuadrtClick(Sender: TObject);
+var
+  i, j, k, n, n1, n2, x1, y1, xOff, yOff: Integer;
+  p1, xFac, yFac: Double;
+  x, y: Array [1..24] of Double;
+  Data: Array [1..6] of Integer = (0,0,1,1,3,-1);
+begin
+  prog := 27;
+  frmMain.Caption := 'Symmetrie. Regelmatige structuren in de kunst. [' + mniQuadrt.Caption + ']';
+  ClearPb;
+  xOff := 0;
+  yOff := pbMain.Height;
+  yFac := -pbMain.Height/60;
+  xFac := pbMain.Width/80;
+  p1 := pi/2;
+  for n := 1 to 3 do
+  begin
+    x[n] := Data[2*n-1];
+    y[n] := Data[2*n];
+  end;
+  for i := 1 to 3 do
+  begin
+    for n := 1 to 3 do
+    begin
+      x[3*i+n] := x[n]*Cos(p1*i)-y[n]*Sin(p1*i);
+      y[3*i+n] := x[n]*Sin(p1*i)+y[n]*Cos(p1*i);
+    end;
+  end;
+  for i := 0 to 3 do
+  begin
+    for n := 1 to 3 do
+    begin
+      x[3*(4+i)+n] := 4-y[3*i+n];
+      y[3*(4+i)+n] := 4-x[3*i+n];
+    end;
+  end;
+  with pbMain.Canvas do
+  begin
+    for n2 := 0 to 5 do
+    begin
+      for n1 := 0 to 7 do
+      begin
+        for j := 0 to 7 do
+        begin
+          x1 := 10+8*n1;
+          y1 := 10+8*n2;
+          MoveTo(Round(xOff+xFac*(x1+x[3*j+1])),Round(yOff+yFac*(y1+y[3*j+1])));
+          for k := 2 to 3 do
+          begin
+            LineTo(Round(xOff+xFac*(x1+x[3*j+k])),Round(yOff+yFac*(y1+y[3*j+k])));
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
+
 procedure TfrmMain.mniHexaClick(Sender: TObject);
 var
   b, f, i, j, k, m, n, n1, n2, s, xOff, yOff: Integer;
@@ -1587,9 +1646,6 @@ begin
         begin
           pbMain.Canvas.Line(Round(xFac*(i-0.5)+xOff),Round(yFac*(j+0.5)+yOff),Round(xFac*(i+0.5)+xOff),Round(yFac*(j-0.5)+yOff));
           pbMain.Canvas.FloodFill(Round(xFac*(i-0.2)+xOff),Round(yFac*(j-0.2)+yOff),clBlack,fsBorder);
-          //pbMain.Canvas.Ellipse(5,5,20,20);
-          //pbMain.Canvas.FloodFill(100,100,clBlack,fsBorder);
-          //pbMain.Canvas.EllipseC(Round(xFac*(i-0.2)+xOff),Round(yFac*(j-0.2)+yOff),3,3);
         end;
         2:
         begin
